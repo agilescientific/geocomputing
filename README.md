@@ -19,10 +19,7 @@ Run the `build.py` script like this to build the `geocomp` (_Intro to Geocomputi
 ## TODO
 
 - Check the actual output :D
-- Images.
 - Thorough testing (I've only really worked on `geocomp` and `geocomp-ml` in development).
 - Documentation of the control file options.
-- Proper tagging of `demo` notebooks, which is a new feature.
+- Proper tagging of `demo` notebooks, which is a new feature (testing in **Advanced_functions.ipynb**)
 - A thorough review of the content in each course.
-- Add develop branch for day-to-day stuff, so we don't rebuild repos with every push?
-- Start some issues.
