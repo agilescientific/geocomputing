@@ -2,6 +2,8 @@ import json
 import os
 import re
 
+import requests
+
 
 def hide_cells(notebook, tags=None):
     """
@@ -117,6 +119,7 @@ def process_notebook(infile,
                      info=True,
                      hidecode=True,
                      demo=False,  # If demo, remove exercises and enable demos.
+                     data_url_stem=None,
                     ):
     """
     Loads an 'ipynb' file as a dict and performs cleaning tasks
@@ -147,7 +150,11 @@ def process_notebook(infile,
     notebook = hide_toolbar(notebook)
 
     text = json.dumps(notebook)
-    images = re.findall(r"\.\./images/(.+?)[)\"']", text)
+    images = re.findall(r"\.\./images/(.+?)(?:\)|\"|')", text)
+
+    if data_url_stem is None:
+        data_url_stem = r"https://geocomp\.s3\.amazonaws\.com/data/"
+    data_urls = re.findall(fr"({data_url_stem}[-_.a-zA-Z0-9]+)", text)
 
     with open(outfile, 'w') as f:
         _ = f.write(text)
@@ -155,4 +162,4 @@ def process_notebook(infile,
     if clear_output:
         _ = os.system("nbstripout {}".format(outfile))
 
-    return images
+    return images, data_urls

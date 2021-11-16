@@ -35,6 +35,7 @@ pip:  # Extra pip packages.
 data:
   - sussex.zip  # Will be unzipped.
   - B-41_tops.txt
+data_url: https://geocomp.s3.amazonaws.com/data/  # This is the default value.
 scripts:
   - utils.py  # Added to `master` and `notebooks` folders (not `demos`).
 curriculum:

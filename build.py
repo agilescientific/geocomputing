@@ -11,9 +11,9 @@ import pathlib
 import shutil
 import zipfile
 import os
-import warnings
 from urllib.request import urlretrieve
 
+import requests
 import click
 import yaml
 from jinja2 import Environment, FileSystemLoader
@@ -62,10 +62,18 @@ def build(course, clean, zip, clobber):
     _ = path.mkdir(parents=True, exist_ok=True)
 
     # Build the notebooks; also deals with images.
-    *paths, _ = build_notebooks(path, config)
+    *paths, _, data_urls_to_check = build_notebooks(path, config)
+
+    # Check the data files exist.
+    click.echo('Checking and downloading data ', nl=False)
+    for url in data_urls_to_check:
+        click.echo('.', nl=False)
+        if requests.head(url).status_code != 200:
+            raise Exception(f"Missing data URL: {url}")
 
     # Make the data directory.
     build_data(path, config)
+    click.echo()
 
     # Deal with scripts.
     if scripts := config.get('scripts'):
@@ -113,12 +121,14 @@ def build_notebooks(path, config):
     notebooks = list(filter(lambda item: '.ipynb' in item, all_items))
     notebooks += config.get('extras', list())
     images_to_copy = []
+    data_urls_to_check = []
     click.echo('Processing notebooks ', nl=False)
     for notebook in notebooks:
         infile = pathlib.Path('prod') / notebook
         outfile = nb_path / notebook
-        images = process_notebook(infile, outfile)
+        images, data_urls = process_notebook(infile, outfile)
         images_to_copy.extend(images)
+        data_urls_to_check.extend(data_urls)
         shutil.copyfile(infile, m_path / notebook)
         # Clear the outputs in the master file.
         _ = os.system("nbstripout {}".format(m_path / notebook))
@@ -127,8 +137,9 @@ def build_notebooks(path, config):
     for notebook in notebooks:
         infile = pathlib.Path('prod') / notebook
         outfile = demo_path / notebook
-        images = process_notebook(infile, outfile, demo=True)
+        images, data_urls = process_notebook(infile, outfile, demo=True)
         images_to_copy.extend(images)
+        data_urls_to_check.extend(data_urls)
         shutil.copyfile(infile, m_path / notebook)
         # Clear the outputs in the master file.
         _ = os.system("nbstripout {}".format(m_path / notebook))
@@ -138,9 +149,9 @@ def build_notebooks(path, config):
         img_path = path.joinpath('images')
         img_path.mkdir()
         for image in images_to_copy:
-            shutil.copyfile(pathlib.Path('images') / image, img_path / image) 
+            shutil.copyfile(pathlib.Path('images') / image, img_path / image)
 
-    return m_path, nb_path, demo_path
+    return m_path, nb_path, demo_path, data_urls_to_check
 
 
 def build_environment(path, config):
@@ -192,13 +203,14 @@ def build_data(path, config):
     data_path = path.joinpath('data')
     data_path.mkdir()
 
+    data_url = config.get('data_url', "https://geocomp.s3.amazonaws.com/data/")
+
     if datasets := config.get('data'):
-        click.echo('Downloading data ', nl=False)
         for fname in datasets:
             click.echo('+', nl=False)
             fpath = data_path / fname
             if not fpath.exists():
-                url = f"https://geocomp.s3.amazonaws.com/data/{fname}"
+                url = f"{data_url}{fname}"
                 urlretrieve(url, fpath)
             if fpath.suffix == '.zip':
                 # Inflate and delete the zip.
@@ -207,7 +219,6 @@ def build_data(path, config):
                 fpath.unlink()
     else:
         path.joinpath('folder_should_be_empty.txt').touch()
-    click.echo()
     return
 
 
