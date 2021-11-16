@@ -27,9 +27,21 @@ env = Environment(loader=FileSystemLoader('templates'))
 @click.argument('course')
 @click.option('--clean', default=True, help="Whether to delete the build directory.")
 @click.option('--zip', default=True, help="Whether to make the zip file.")
-def build(course, clean, zip):
-    """Main building function"""
-
+@click.option('--clobber', default=False, help="Whether to clobber existing files.")
+def build(course, clean, zip, clobber):
+    """
+    Main building function. Compiles the required files into a course repo, which
+    will be zipped by default.
+    
+    Args:
+        course (str): The course to build. One of geocomp, geocomp-ml, geocomp-gp, etc.
+        clean (bool): Whether to remove the build files. Default: True.
+        zip (bool): Whether to create the zip file for the course repo. Default: True.
+        clobber (bool): Whether to overwrite existing ZIP file and build directory. 
+            If False, the CLI will prompt you to confirm overwrite. Default: False.
+    Returns:
+        None.
+    """
     # Read the YAML control file.
     with open(f'{course}.yaml', 'r') as f:
         try:
@@ -40,9 +52,16 @@ def build(course, clean, zip):
 
     # Make a path to store everything.
     path = pathlib.Path('build').joinpath(course)
+    if path.exists():
+        if clobber or click.confirm("The target directory exists and will be overwritten. Are you sure?", default=True, abort=True):
+            shutil.rmtree(path)
+    if pathlib.Path(f"{course}.zip").exists():
+        if clobber or click.confirm("The ZIP file exists and will be overwritten. Are you sure?", default=True, abort=True):
+            pathlib.Path(f"{course}.zip").unlink()
+
     _ = path.mkdir(parents=True, exist_ok=True)
 
-    # Build the notebooks.
+    # Build the notebooks; also deals with images.
     paths = build_notebooks(path, config)
 
     # Make the data directory.
@@ -53,9 +72,6 @@ def build(course, clean, zip):
         for script in scripts:
             for p in paths:
                 shutil.copyfile(pathlib.Path('scripts') / script, p / script)
-
-    # Deal with images.
-    collect_images(path, config)
 
     # Make the environment.yaml file.
     build_environment(path, config)
@@ -76,10 +92,6 @@ def build(course, clean, zip):
     return
 
 
-def collect_images(path, config):
-    return
-
-
 def build_notebooks(path, config):
     """
     Process the notebook files. We'll look at three sections of the
@@ -88,12 +100,12 @@ def build_notebooks(path, config):
     """
     # Make the various directories.
     m_path = path.joinpath('master')
-    m_path.mkdir(exist_ok=True)
+    m_path.mkdir()
     nb_path = path.joinpath('notebooks')
-    nb_path.mkdir(exist_ok=True)
+    nb_path.mkdir()
     if config.get('demos'):
         demo_path = path.joinpath('demos')
-        demo_path.mkdir(exist_ok=True)
+        demo_path.mkdir()
 
     all_items = [f for items in config['curriculum'].values() for f in items]
     notebooks = list(filter(lambda item: '.ipynb' in item, all_items))
@@ -122,7 +134,7 @@ def build_notebooks(path, config):
     click.echo()
     if images_to_copy:
         img_path = path.joinpath('images')
-        img_path.mkdir(exist_ok=True)
+        img_path.mkdir()
         for image in images_to_copy:
             shutil.copyfile(pathlib.Path('images') / image, img_path / image) 
 
@@ -175,7 +187,7 @@ def build_data(path, config):
     of the geocomp bucket of AWS S3.
     """
     data_path = path.joinpath('data')
-    data_path.mkdir(exist_ok=True)
+    data_path.mkdir()
 
     if datasets := config.get('data'):
         click.echo('Downloading data ', nl=False)
