@@ -18,6 +18,7 @@ Run the `build.py` script like this to build the `geocomp` (_Intro to Geocomputi
 
 ## TODO
 
+- Check the actual output :D
 - Images.
 - Thorough testing (I've only really worked on `geocomp` and `geocomp-ml` in development).
 - Documentation of the control file options.
