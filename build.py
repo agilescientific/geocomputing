@@ -49,7 +49,6 @@ def build(course, clean, zip):
 
     # Deal with scripts.
     if scripts := config.get('scripts'):
-        print(scripts)
         for script in scripts:
             for p in paths:
                 shutil.copyfile(pathlib.Path('scripts') / script, p / script)
