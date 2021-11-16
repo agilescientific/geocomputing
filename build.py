@@ -11,6 +11,7 @@ import pathlib
 import shutil
 import zipfile
 import os
+import warnings
 from urllib.request import urlretrieve
 
 import click
@@ -53,6 +54,9 @@ def build(course, clean, zip):
             for p in paths:
                 shutil.copyfile(pathlib.Path('scripts') / script, p / script)
 
+    # Deal with images.
+    collect_images(path, config)
+
     # Make the environment.yaml file.
     build_environment(path, config)
 
@@ -71,30 +75,36 @@ def build(course, clean, zip):
 
     return
 
+
+def collect_images(path, config):
+    return
+
+
 def build_notebooks(path, config):
     """
     Process the notebook files. We'll look at three sections of the
     config: curriculum (which contains non-notebook items too),
     extras (which are listed in the README), and demos (which are not).
     """
-    # Make the master directory.
+    # Make the various directories.
     m_path = path.joinpath('master')
     m_path.mkdir(exist_ok=True)
-
-    # Make the various notebooks directories.
     nb_path = path.joinpath('notebooks')
     nb_path.mkdir(exist_ok=True)
-    demo_path = path.joinpath('demos')
-    demo_path.mkdir(exist_ok=True)
+    if config.get('demos'):
+        demo_path = path.joinpath('demos')
+        demo_path.mkdir(exist_ok=True)
 
     all_items = [f for items in config['curriculum'].values() for f in items]
     notebooks = list(filter(lambda item: '.ipynb' in item, all_items))
     notebooks += config['extras']
+    images_to_copy = []
     click.echo('Processing notebooks ', nl=False)
     for notebook in notebooks:
         infile = pathlib.Path('prod') / notebook
         outfile = nb_path / notebook
-        process_notebook(infile, outfile)
+        images = process_notebook(infile, outfile)
+        images_to_copy.extend(images)
         shutil.copyfile(infile, m_path / notebook)
         # Clear the outputs in the master file.
         _ = os.system("nbstripout {}".format(m_path / notebook))
@@ -103,12 +113,18 @@ def build_notebooks(path, config):
     for notebook in notebooks:
         infile = pathlib.Path('prod') / notebook
         outfile = demo_path / notebook
-        process_notebook(infile, outfile, demo=True)
+        images = process_notebook(infile, outfile, demo=True)
+        images_to_copy.extend(images)
         shutil.copyfile(infile, m_path / notebook)
         # Clear the outputs in the master file.
         _ = os.system("nbstripout {}".format(m_path / notebook))
         click.echo('+', nl=False)
     click.echo()
+    if images_to_copy:
+        img_path = path.joinpath('images')
+        img_path.mkdir(exist_ok=True)
+        for image in images_to_copy:
+            shutil.copyfile(pathlib.Path('images') / image, img_path / image) 
 
     return m_path, nb_path, demo_path
 
@@ -165,14 +181,14 @@ def build_data(path, config):
         click.echo('Downloading data ', nl=False)
         for fname in datasets:
             click.echo('+', nl=False)
-            fpath = path / fname
+            fpath = data_path / fname
             if not fpath.exists():
                 url = f"https://geocomp.s3.amazonaws.com/data/{fname}"
                 urlretrieve(url, fpath)
             if fpath.suffix == '.zip':
                 # Inflate and delete the zip.
                 with zipfile.ZipFile(fpath, 'r') as z:
-                    z.extractall(path)
+                    z.extractall(data_path)
                 fpath.unlink()
     else:
         path.joinpath('folder_should_be_empty.txt').touch()

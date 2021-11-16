@@ -132,7 +132,7 @@ def process_notebook(infile,
     if demo:
         notebook = hide_cells(notebook, tags=['exercise', 'solution'])
     else:
-        notebook = hide_cells(notebook, tags=['hide'])
+        notebook = hide_cells(notebook, tags=['hide', 'demo'])
 
     if exercise:
         notebook = style_cells(notebook, 'exercise')
@@ -146,10 +146,13 @@ def process_notebook(infile,
 
     notebook = hide_toolbar(notebook)
 
+    text = json.dumps(notebook)
+    images = re.findall(r"\.\./images/(.+?)[)\"']", text)
+
     with open(outfile, 'w') as f:
-        _ = f.write(json.dumps(notebook))
+        _ = f.write(text)
 
     if clear_output:
         _ = os.system("nbstripout {}".format(outfile))
 
-    return
+    return images
