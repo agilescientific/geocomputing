@@ -62,7 +62,7 @@ def build(course, clean, zip, clobber):
     _ = path.mkdir(parents=True, exist_ok=True)
 
     # Build the notebooks; also deals with images.
-    paths = build_notebooks(path, config)
+    *paths, _ = build_notebooks(path, config)
 
     # Make the data directory.
     build_data(path, config)
@@ -106,10 +106,12 @@ def build_notebooks(path, config):
     if config.get('demos'):
         demo_path = path.joinpath('demos')
         demo_path.mkdir()
+    else:
+        demo_path = None
 
     all_items = [f for items in config['curriculum'].values() for f in items]
     notebooks = list(filter(lambda item: '.ipynb' in item, all_items))
-    notebooks += config['extras']
+    notebooks += config.get('extras', list())
     images_to_copy = []
     click.echo('Processing notebooks ', nl=False)
     for notebook in notebooks:
@@ -164,7 +166,7 @@ def build_environment(path, config):
     # Write the new environment file to the course directory.
     with open(path / 'environment.yaml', 'w') as f:
         f.write(yaml.dump(conda, default_flow_style=False, sort_keys=False))
-
+    return
 
 def build_readme(path, config):
     """Build the README.md using Jinja2 templates. Note that there
@@ -180,6 +182,7 @@ def build_readme(path, config):
     template = env.get_template('README.md')
     with open(path / 'README.md', 'w') as f:
         f.write(template.render(**content))
+    return
 
 
 def build_data(path, config):
@@ -205,6 +208,7 @@ def build_data(path, config):
     else:
         path.joinpath('folder_should_be_empty.txt').touch()
     click.echo()
+    return
 
 
 if __name__ == '__main__':
