@@ -1,0 +1,55 @@
+title: Digital Geophysics
+conda:
+  - umap-learn
+  - hdbscan
+  - verde
+pip:
+  - scikit-som
+curriculum:
+  1:
+    - Installation and setup
+    - Quick course overview
+    - Introductions
+    - Synthetic_wedge.ipynb
+    - Check out and feedback
+  2:
+    - Check in and review
+    - Seismic-well_tie.ipynb
+    - Wavelet_estimation.ipynb
+    - Check out and feedback
+  3:
+    - Check in and review
+    - Complex_trace_attributes.ipynb
+    - Phase_determination.ipynb
+    - Horizon_tracking.ipynb
+    - Check out and feedback
+  4:
+    - Check in and review
+    - Spectral_decomposition.ipynb
+    - Seismic_discontinuity_attributes.ipynb
+    - Waveform_classification.ipynb
+    - Check out and feedback
+extras:
+  - Arbitrary_line_interpolation_with_xarray.ipynb
+  - AVO_and_more_with_bruges.ipynb
+  - Bit_depth.ipynb
+  - Find_and_analyse_seismograph_data.ipynb
+  - Fourier_transforms_and_the_frequency_domain.ipynb
+  - HDF5_for_data_management.ipynb
+  - How_to_use_the_kata.ipynb
+  - Intro_to_interpolation.ipynb
+  - Ordinary_differential_equations.ipynb
+  - Pandas_for_data_management.ipynb
+  - Pint_for_physical_units.ipynb
+  - Practice_loops.ipynb
+  - Prestack_seismic.ipynb
+  - Read_and_write_LAS.ipynb
+  - Reading_files_from_the_web.ipynb
+  - Read_SEG-Y_with_segyio.ipynb
+  - SegySAK_for_SEG-Y.ipynb
+  - Seismic_data_basics.ipynb
+  - Solving_equations.ipynb
+  - Wavelets_and_sweeps.ipynb
+  - Write_SEG-Y_with_segyio.ipynb
+  - Writing_data_to_files_or_databases.ipynb
+  - Xarray_for_indexed_arrays.ipynb

@@ -1,0 +1,33 @@
+# This file does not use a name.
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python>=3.9
+  - pip
+  - numpy
+  - scipy
+  - matplotlib
+  - jupyter
+  - jupyterlab
+  - ipykernel
+  - ipywidgets
+  - pandas
+  - geopandas
+  - scikit-learn
+  - pillow
+  - h5py
+  - seaborn
+  - pint
+  - cartopy
+  - xarray
+  - requests
+  - tqdm
+  - pip:
+    - bruges
+    - welly
+    - wellpathpy
+    - segyio
+    - dlisio
+    - segysak
+    - python-certifi-win32

@@ -1,0 +1,4 @@
+nbstripout
+click
+Jinja2
+pyyaml

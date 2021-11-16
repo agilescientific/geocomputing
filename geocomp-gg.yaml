@@ -1,0 +1,43 @@
+intro: Welcome to the Digital Geoscience class!
+conda:
+  - descartes
+  - mapclassify
+  - verde
+  - scikit-image
+pip:
+  - pandas-profiling[notebook]
+notebooks:
+  1:
+    - Installation and setup
+    - Quick course overview
+    - Introductions
+    - Volumetrics.ipynb
+    - Check out and feedback
+  2:
+    - Check in and review
+    - Synthetic_wedge.ipynb
+    - Check out and feedback
+  3:
+    - Check in and review
+    - Intro_to_interpolation.ipynb
+    - Making_maps_with_various_methods.ipynb
+    - Check out and feedback
+  4:
+    - Check in and review
+    - Pandas_for_data_management.ipynb
+    - GeoPandas_for_spatial_data.ipynb
+    - Image_segmentation.ipynb
+    - Check out and feedback
+extras:
+  - Birthquake.ipynb
+  - Find_and_analyse_seismograph_data.ipynb
+  - Fourier_transforms_and_the_frequency_domain.ipynb
+  - Get_info_from_web.ipynb
+  - How_to_use_the_kata.ipynb
+  - Monte_Carlo_simulation.ipynb
+  - Pandas_for_timeseries.ipynb
+  - Pint_for_physical_units.ipynb
+  - Read_and_write_LAS.ipynb
+  - Reading_files_from_the_web.ipynb
+  - Read_SEG-Y_with_segyio.ipynb
+  - SegySAK_for_SEG-Y.ipynb
