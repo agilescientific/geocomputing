@@ -150,11 +150,13 @@ def process_notebook(infile,
     notebook = hide_toolbar(notebook)
 
     text = json.dumps(notebook)
-    images = re.findall(r"\.\./images/(.+?)(?:\)|\"|')", text)
+    images = re.findall(r"\.\./images/([-_.a-zA-Z0-9]+)", text)
+    # print(infile, images)
 
     if data_url_stem is None:
         data_url_stem = r"https://geocomp\.s3\.amazonaws\.com/data/"
     data_urls = re.findall(fr"({data_url_stem}[-_.a-zA-Z0-9]+)", text)
+    # print(infile, data_urls)
 
     with open(outfile, 'w') as f:
         _ = f.write(text)

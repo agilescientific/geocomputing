@@ -15,7 +15,7 @@ Run the `build.py` script like this to build the `geocomp` (_Intro to Geocomputi
 
     ./build.py geocomp
 
-### Options
+You can pass the following options:
 
 - **`--clean`** &mdash; Whether to remove the build files. Default: `True`.
 - **`--zip`** &mdash; Whether to create the zip file for the course repo. Default: `True`.
