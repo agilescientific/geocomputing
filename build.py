@@ -81,7 +81,14 @@ def build(course, clean, zip, clobber):
             for p in paths:
                 shutil.copyfile(pathlib.Path('scripts') / script, p / script)
 
-    # Make the environment.yaml file.
+    # Make the references folder.
+    if refs := config.get('references'):
+        ref_path = path.joinpath('references')
+        ref_path.mkdir()
+        for fname in refs:
+            shutil.copyfile(pathlib.Path('references') / fname, ref_path / fname)
+
+     # Make the environment.yaml file.
     build_environment(path, config)
 
     # Make the README.
