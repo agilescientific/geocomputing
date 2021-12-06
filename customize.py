@@ -165,3 +165,14 @@ def process_notebook(infile,
         _ = os.system("nbstripout {}".format(outfile))
 
     return images, data_urls
+
+if __name__ == "__main__":
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Clean a notebook")
+    parser.add_argument('infile', help='Input notebook')
+    parser.add_argument('outfile', help='Output notebook')
+    parser.add_argument('--clear-input', action='store_true', help='Remove input cells')
+    parser.add_argument('--clear-output', action='store_true', help='Remove output cells')
+
+    process_notebook(**vars(parser.parse_args()))
