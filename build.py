@@ -43,6 +43,8 @@ def build(course, clean, zip, clobber):
         None.
     """
     # Read the YAML control file.
+    if course.endswith('.yaml'):
+        course = course[:-5]
     with open(f'{course}.yaml', 'r') as f:
         try:
             config = yaml.safe_load(f)
