@@ -25,9 +25,9 @@ env = Environment(loader=FileSystemLoader('templates'))
 
 @click.command(context_settings=dict(help_option_names=['--help', '-h']))
 @click.argument('course')
-@click.option('--clean', default=True, help="Whether to delete the build directory.")
-@click.option('--zip', default=True, help="Whether to make the zip file.")
-@click.option('--clobber', default=False, help="Whether to clobber existing files.")
+@click.option('--clean', default=True, help="Whether to delete the build directory.", type=bool)
+@click.option('--zip', default=True, help="Whether to make the zip file.", type=bool)
+@click.option('--clobber', default=False, help="Whether to clobber existing files.", type=bool)
 def build(course, clean, zip, clobber):
     """
     Main building function. Compiles the required files into a course repo, which
