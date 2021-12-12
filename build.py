@@ -98,7 +98,7 @@ def build(course, clean, zip, clobber):
 
     # Zip it.
     if zip:
-        zipped = shutil.make_archive(course, 'zip', path)
+        zipped = shutil.make_archive(course, 'zip', root_dir='build', base_dir=course)
         click.echo(f"Created {zipped}")
 
     # Remove build.
