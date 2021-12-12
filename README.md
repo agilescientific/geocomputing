@@ -1,12 +1,21 @@
-# geocomputing
+`# geocomputing
 
 This is the main repository for Agile's geocomputing courses.
 
 The main features:
 
 - There is one control file per course, e.g. `geocomp.yaml`. This file contains the metadata for the course, including the curriculum and a list of its notebooks.
-- There is one main environment file, `environment.yaml`. This contains packages to be installed for all classes. (A class's control file lists any other packages to install for that class.)
-- There is one main script, `build.py`, which builds a course's ZIP file. Run it from the command line, with the class to build.
+- There is one main environment file, `environment.yaml`. This contains packages to be installed for (i.e. common to)  all courses. A course's YAML control file lists any other packages to install for that class.
+- There is one main script, `build.py`, which builds a course's ZIP file. Run it from the command line, with the course to build, see beow.
+
+
+## Requirements
+
+In order to build files, you will need the following:
+
+- Python 3.8+.
+- Everything in `dev_requirements.txt`.
+- If you want to upload to AWS S3, you'll need to install `boto3` as well, and have credentials set up on your machine. The easiest way to manage an AWS environment on your computer is probably via the AWS CLI.
 
 
 ## Usage
@@ -17,9 +26,14 @@ Run the `build.py` script like this to build the `geocomp` (_Intro to Geocomputi
 
 You can pass the following options:
 
-- **`--clean`** &mdash; Whether to remove the build files. Default: `True`.
-- **`--zip`** &mdash; Whether to create the zip file for the course repo. Default: `True`.
-- **`--clobber`** &mdash; Whether to overwrite existing ZIP file and build directory. If False, the CLI will prompt you to confirm overwrite. Default: `False`.
+- **`--clean` / `--no-clean`** &mdash; Whether to delete the build files. Default: `clean`.
+- **`--zip` / `--no-zip`** &mdash; Whether to **create** the zip file for the course repo. Default: `zip`.
+- **`--upload` / `--no-upload`** &mdash; Whether to **upload** the zip file to `geocomp.s3.amazonaws.com`. Default: `no-upload`. Note that this requires AWS credentials to be set up on your machine.
+- **`--clobber` / `--no-clobber`** &mdash; Whether to silently overwrite existing ZIP file and/or build directory. If `no-clobber`, the CLI will prompt you to overwrite or not. Default: `no-clobber`.
+
+To build the machine learning course, silently overwriting any existing things, and upload the zip to AWS:
+
+    ./build.py geocomp-ml --clobber --upload
 
 
 ## Example control file
@@ -64,8 +78,7 @@ Only `title` and `curriculum` are required fields.
 
 ## TODO
 
-- Check the actual output :D
-- Thorough testing (I've only really worked on `geocomp` and `geocomp-ml` in development).
+- More testing (I've only really worked on `geocomp` and `geocomp-ml` in development).
 - Documentation of the control file options.
 - Proper tagging of `demo` notebooks, which is a new feature (testing in **Advanced_functions.ipynb**)
 - A thorough review of the content in each course.

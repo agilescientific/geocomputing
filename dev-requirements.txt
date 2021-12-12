@@ -3,3 +3,4 @@ click
 Jinja2
 pyyaml
 requests
+boto3

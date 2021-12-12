@@ -11,12 +11,20 @@ import pathlib
 import shutil
 import zipfile
 import os
+import warnings
 from urllib.request import urlretrieve
 
 import requests
 import click
 import yaml
 from jinja2 import Environment, FileSystemLoader
+
+try:
+    import boto3
+    from botocore.exceptions import ClientError
+    aws_available = True
+except:
+    aws_available = False
 
 from customize import process_notebook
 
@@ -25,10 +33,11 @@ env = Environment(loader=FileSystemLoader('templates'))
 
 @click.command(context_settings=dict(help_option_names=['--help', '-h']))
 @click.argument('course')
-@click.option('--clean', default=True, help="Whether to delete the build directory.", type=bool)
-@click.option('--zip', default=True, help="Whether to make the zip file.", type=bool)
-@click.option('--clobber', default=False, help="Whether to clobber existing files.", type=bool)
-def build(course, clean, zip, clobber):
+@click.option('--clean/--no-clean', default=True, help="Delete the build dir? Default: clean.")
+@click.option('--zip/--no-zip', default=True, help="Make the zip file? Default: zip.")
+@click.option('--upload/--no-upload', default=False, help="Upload the ZIP to S3? Default: no-upload.")
+@click.option('--clobber/--no-clobber', default=False, help="Clobber existing files? Default: no-clobber.")
+def build(course, clean, zip, upload, clobber):
     """
     Main building function. Compiles the required files into a course repo, which
     will be zipped by default.
@@ -43,9 +52,7 @@ def build(course, clean, zip, clobber):
         None.
     """
     # Read the YAML control file.
-    if course.endswith('.yaml'):
-        course = course[:-5]
-    with open(f'{course}.yaml', 'r') as f:
+    with open(f"{course.removesuffix('.yaml')}.yaml", 'r') as f:
         try:
             config = yaml.safe_load(f)
         except yaml.YAMLError as e:
@@ -53,7 +60,8 @@ def build(course, clean, zip, clobber):
     config['course'] = course
 
     # Make a path to store everything.
-    path = pathlib.Path('build').joinpath(course)
+    build_path = 'build'
+    path = pathlib.Path(build_path).joinpath(course)
     if path.exists():
         if clobber or click.confirm("The target directory exists and will be overwritten. Are you sure?", default=True, abort=True):
             shutil.rmtree(path)
@@ -98,8 +106,14 @@ def build(course, clean, zip, clobber):
 
     # Zip it.
     if zip:
-        zipped = shutil.make_archive(course, 'zip', root_dir='build', base_dir=course)
+        zipped = shutil.make_archive(course, 'zip', root_dir=build_path, base_dir=course)
         click.echo(f"Created {zipped}")
+
+    # Upload to AWS.
+    if upload:
+        success = upload_zip(zipped)
+        if success:
+            click.echo(f"Uploaded {zipped}")
 
     # Remove build.
     if clean:
@@ -227,8 +241,31 @@ def build_data(path, config):
                     z.extractall(data_path)
                 fpath.unlink()
     else:
-        path.joinpath('folder_should_be_empty.txt').touch()
+        data_path.joinpath('folder_should_be_empty.txt').touch()
     return
+
+
+def upload_zip(file_name, bucket='geocomp', object_name=None):
+    """Upload a file to an S3 bucket
+
+    :param file_name: File to upload
+    :param bucket: Bucket to upload to
+    :param object_name: S3 object name. If not specified then file_name is used
+    :return: True if file was uploaded, else False
+    """
+    # If S3 object_name was not specified, use file_name
+    if object_name is None:
+        object_name = os.path.basename(file_name)
+
+    # Upload the file
+    s3_client = boto3.client('s3')
+    try:
+        args = {'ACL':'public-read'}
+        _ = s3_client.upload_file(file_name, bucket, object_name, ExtraArgs=args)
+    except ClientError as e:
+        warnings.warn("Upload to S3 failed:", e)
+        return False
+    return True
 
 
 if __name__ == '__main__':
