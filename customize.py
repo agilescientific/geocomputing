@@ -129,7 +129,7 @@ def process_notebook(infile,
     if clear_input:
         _ = os.system("nbstripout {}".format(infile))
 
-    with open(infile) as f:
+    with open(infile, encoding='utf-8') as f:
         notebook = json.loads(f.read())
 
     if demo:
