@@ -13,6 +13,20 @@ from sklearn.metrics import confusion_matrix
 from scipy.spatial.distance import pdist, cdist, squareform
 from scipy.stats import mode
 
+# These are used for the comparison plot:
+import pandas as pd
+from matplotlib.colors import ListedColormap
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.datasets import make_moons, make_circles, make_classification
+from sklearn.neural_network import MLPClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC
+from sklearn.gaussian_process import GaussianProcessClassifier
+from sklearn.gaussian_process.kernels import RBF
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+
 
 def gen_knn_data(size=(20, 20)):
     """
@@ -308,6 +322,220 @@ def plot_activation(f, domain=(-5, 5), **kwargs):
     plt.show()
 
     return
+
+
+def _create_comparison_data(data=None, replace=False):
+    """Make the default data used for the comparison plot.
+
+    Args:
+        data (tuple, optional): Data of the form (X, y). Defaults to None.
+        replace (bool, optional): Whether to add a new dataset to the comparison plot.
+                                  False will add to the default data.
+                                  True will replace and use the new dataset only. Defaults to False.
+
+    Returns:
+        list of tuples: list of tuples each of the form (X, y)
+    """
+    if replace:
+        return [data]
+    X, y = make_classification(
+        n_features=2, n_redundant=0, n_informative=2, random_state=1, n_clusters_per_class=1
+    )
+    rng = np.random.RandomState(2)
+    X += 2 * rng.uniform(size=X.shape)
+    linearly_separable = (X, y)
+
+    datasets = [
+        make_moons(noise=0.3, random_state=0),
+        make_circles(noise=0.2, factor=0.5, random_state=1),
+        linearly_separable,
+    ]
+
+    df = pd.read_csv('https://geocomp.s3.amazonaws.com/data/RPC_simple.csv')
+    X = df[['Vp', 'rho']].values
+    y = df.Lithology.values
+
+    datasets += [(X, y == 'sandstone')]
+    if not replace and data is not None:
+        datasets += [data]
+
+    return datasets
+
+
+def make_comparison_plot(classifiers=None, data=None,
+                         replace_dataset=False, replace_classifiers=False):
+    """Make a plot based on https://scikit-learn.org/stable/auto_examples/classification/plot_classifier_comparison.html
+    This function lets you change the classifiers that are compared,
+    as well as the dataset to be classified.
+
+    The plot will be sized giving each row and column equal space, so a single
+    dataset will only show a single row. The same is true for classifiers and 
+    columns.
+
+    At present, only a single dataset in addition to the four used by default
+    can be passed, but any number of classifiers can be passed (in theory).
+
+    This function should probably be split, with the plotting code in a helper
+    function of its own.
+
+    Args:
+        classifiers (dict, optional): key is string to be used for title in plot
+                                      value is the instantiation of a classifier.
+                                      Defaults to None.
+        data (tuple, optional): Needs to be of the form (X, y). Defaults to None.
+        replace_dataset (bool, optional): If True, this will use the dataset supplied
+                                             instead of the default.
+                                          If False, this will add the dataset to the
+                                             default set and plot all of them.
+                                          Requires `data` to be passed.
+                                          Defaults to False.
+        replace_classifiers (bool, optional): If True, this will use the classifiers
+                                                passed instead of the default selection.
+                                              If False, this will add the classifiers
+                                                passed to the default selection.
+                                              Requires `classifiers` to be passed.
+                                              Defaults to False.
+    Returns:
+        None, but a plot is made as a side-effect.
+
+    Examples:
+        Default plot, no changes.
+        >>> make_comparison_plot()
+
+        Use only new classifiers, default datasets.
+        >>> classifiers = {
+        ... 'Extra Trees'              : ExtraTreesClassifier(),
+        ... 'Decision Tree\n(depth=3)' : DecisionTreeClassifier(max_depth=3),
+        ... 'Decision Tree\n(depth=10)': DecisionTreeClassifier(max_depth=10),
+        ... }
+        >>> make_comparison_plot(classifiers=classifiers, replace_classifiers=True)
+
+        Use only new data, default classifiers.
+        >>> df = pd.read_csv('https://geocomp.s3.amazonaws.com/data/RPC_simple.csv')
+        >>> X = df[['Vp', 'rho']].values
+        >>> y = df.Lithology.values
+        >>> data = (X, y == 'sandstone') # we need to add a tuple of (X, y)
+        >>> make_comparison_plot(data=data, replace_dataset=True)
+    """
+    if classifiers:
+        classifiers_new = classifiers.copy()
+        # We need a copy because otherwise we are changing the original dict.
+    else:
+        classifiers_new = classifiers
+    
+    # We will use this if we do not already have any classifiers.
+    classifiers_default = {
+        "Nearest Neighbors\n(k=1)": KNeighborsClassifier(1),
+        "Nearest Neighbors\n(k=9)": KNeighborsClassifier(9),
+        "Linear SVM": SVC(kernel='linear'),
+        "RBF SVM\n(C=1)": SVC(gamma=2, C=1),
+        "RBF SVM\n(C=10)": SVC(gamma=2, C=10),
+        "Gaussian Process": GaussianProcessClassifier(1.0 * RBF(1.0)),
+        "Decision Tree\n(depth=2)": DecisionTreeClassifier(max_depth=2),
+        "Decision Tree\n(depth=15)": DecisionTreeClassifier(max_depth=15),
+        "Random Forest\n(depth=2)": RandomForestClassifier(max_depth=2),
+        "Neural Network": MLPClassifier(alpha=1, max_iter=1000),
+    }
+
+    if classifiers_new is not None and replace_classifiers is True:
+        # We have classifiers and want to replace the defaults.
+        # We do not actually need this case, but explicit is good.
+        pass
+    elif classifiers_new is not None and replace_classifiers is False:
+        # We have classifiers and want to add to the defaults.
+        classifiers_new.update(classifiers_default)
+    else:
+        # We have not been given classifiers, so use the defaults.
+        classifiers_new = classifiers_default
+
+    h = 0.02  # step size in the mesh
+
+    datasets = _create_comparison_data(data, replace=replace_dataset)
+
+    height, width = 2*len(datasets), 2*len(classifiers_new) + 2
+
+    figure = plt.figure(figsize=(width, height))
+    i = 1
+    # iterate over datasets
+    for ds_cnt, ds in enumerate(datasets):
+        # preprocess dataset, split into training and test part
+        X, y = ds
+        X = StandardScaler().fit_transform(X)
+        X_train, X_test, y_train, y_test = train_test_split(
+            X, y, test_size=0.4, random_state=42
+        )
+
+        x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
+        y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
+        xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+
+        # just plot the dataset first
+        cm = plt.cm.RdBu
+        cm_bright = ListedColormap(["#FF0000", "#0000FF"])
+        ax = plt.subplot(len(datasets), len(classifiers_new) + 1, i)
+        if ds_cnt == 0:
+            ax.set_title("Input data")
+        # Plot the training points
+        ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright, edgecolors="k")
+        # Plot the testing points
+        ax.scatter(
+            X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright, alpha=0.6, edgecolors="k"
+        )
+        ax.set_xlim(xx.min(), xx.max())
+        ax.set_ylim(yy.min(), yy.max())
+        ax.set_xticks(())
+        ax.set_yticks(())
+        i += 1
+
+        # iterate over classifiers
+        for name, clf in classifiers_new.items():
+            ax = plt.subplot(len(datasets), len(classifiers_new) + 1, i)
+            clf.fit(X_train, y_train)
+            score = clf.score(X_test, y_test)
+
+            # Plot the decision boundary. For that, we will assign a color to each
+            # point in the mesh [x_min, x_max]x[y_min, y_max].
+            if hasattr(clf, "decision_function"):
+                Z = clf.decision_function(np.c_[xx.ravel(), yy.ravel()])
+            else:
+                Z = clf.predict_proba(np.c_[xx.ravel(), yy.ravel()])[:, 1]
+
+            # Put the result into a color plot
+            Z = Z.reshape(xx.shape)
+            ax.contourf(xx, yy, Z, cmap=cm, alpha=0.8)
+
+            # Plot the training points
+            ax.scatter(
+                X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright, edgecolors="k"
+            )
+            # Plot the testing points
+            ax.scatter(
+                X_test[:, 0],
+                X_test[:, 1],
+                c=y_test,
+                cmap=cm_bright,
+                edgecolors="k",
+                alpha=0.6,
+            )
+
+            ax.set_xlim(xx.min(), xx.max())
+            ax.set_ylim(yy.min(), yy.max())
+            ax.set_xticks(())
+            ax.set_yticks(())
+            if ds_cnt == 0:
+                ax.set_title(name)
+            ax.text(
+                xx.max() - 0.3,
+                yy.min() + 0.3,
+                ("%.2f" % score).lstrip("0"),
+                size=15,
+                horizontalalignment="right",
+            )
+            i += 1
+
+    plt.tight_layout()
+    plt.show()
+    return 
 
 
 if __name__ == '__main__':
