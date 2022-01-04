@@ -14,6 +14,7 @@ from scipy.spatial.distance import pdist, cdist, squareform
 from scipy.stats import mode
 
 # These are used for the comparison plot:
+from matplotlib.colors import LinearSegmentedColormap
 import pandas as pd
 from matplotlib.colors import ListedColormap
 from sklearn.model_selection import train_test_split
@@ -470,16 +471,19 @@ def make_comparison_plot(classifiers=None, data=None,
         xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 
         # just plot the dataset first
-        cm = plt.cm.RdBu
-        cm_bright = ListedColormap(["#FF0000", "#0000FF"])
+        colors = ['#7c91b9', '#e5e8eb', '#74cada']
+        cm = LinearSegmentedColormap.from_list("mycmap", colors)
+        cm_bright = ListedColormap(["#7c91b9", "#74cada"])
         ax = plt.subplot(len(datasets), len(classifiers_new) + 1, i)
+        edgecolor1 = '0.4'
+        edgecolor2 = '0.2'
         if ds_cnt == 0:
             ax.set_title("Input data")
         # Plot the training points
-        ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright, edgecolors="k")
+        ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright, edgecolors=edgecolor1)
         # Plot the testing points
         ax.scatter(
-            X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright, alpha=0.6, edgecolors="k"
+            X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright, alpha=0.6, edgecolors=edgecolor2
         )
         ax.set_xlim(xx.min(), xx.max())
         ax.set_ylim(yy.min(), yy.max())
@@ -506,16 +510,12 @@ def make_comparison_plot(classifiers=None, data=None,
 
             # Plot the training points
             ax.scatter(
-                X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright, edgecolors="k"
+                X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright, edgecolors=edgecolor1
             )
             # Plot the testing points
             ax.scatter(
-                X_test[:, 0],
-                X_test[:, 1],
-                c=y_test,
-                cmap=cm_bright,
-                edgecolors="k",
-                alpha=0.6,
+                X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright,
+                edgecolors=edgecolor2, alpha=0.6,
             )
 
             ax.set_xlim(xx.min(), xx.max())
