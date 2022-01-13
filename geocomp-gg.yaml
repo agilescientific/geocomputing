@@ -1,4 +1,4 @@
-intro: Welcome to the Digital Geoscience class!
+title: Digital Geoscience
 conda:
   - descartes
   - mapclassify
@@ -6,7 +6,7 @@ conda:
   - scikit-image
 pip:
   - pandas-profiling[notebook]
-notebooks:
+curriculum:
   1:
     - Installation and setup
     - Quick course overview

@@ -21,7 +21,7 @@ curriculum:
     - Check in and review
     - Complex_trace_attributes.ipynb
     - Phase_determination.ipynb
-    - Horizon_tracking.ipynb
+    # - Horizon_tracking.ipynb  # In development.
     - Check out and feedback
   4:
     - Check in and review
@@ -48,7 +48,7 @@ extras:
   - Read_SEG-Y_with_segyio.ipynb
   - SegySAK_for_SEG-Y.ipynb
   - Seismic_data_basics.ipynb
-  - Solving_equations.ipynb
+  # - Solving_equations.ipynb  # In development.
   - Wavelets_and_sweeps.ipynb
   - Write_SEG-Y_with_segyio.ipynb
   - Writing_data_to_files_or_databases.ipynb
