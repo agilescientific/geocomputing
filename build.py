@@ -22,9 +22,9 @@ from jinja2 import Environment, FileSystemLoader
 try:
     import boto3
     from botocore.exceptions import ClientError
-    aws_available = True
+    AWS_AVAILABLE = True
 except:
-    aws_available = False
+    AWS_AVAILABLE = False
 
 from customize import process_notebook
 
@@ -253,6 +253,11 @@ def upload_zip(file_name, bucket='geocomp', object_name=None):
     :param object_name: S3 object name. If not specified then file_name is used
     :return: True if file was uploaded, else False
     """
+    if not AWS_AVAILABLE:
+        m = "AWS upload is not available. You need to install boto3 and botocore, "
+        m += "and set up AWS credentials."
+        raise Exception(m)
+
     # If S3 object_name was not specified, use file_name
     if object_name is None:
         object_name = os.path.basename(file_name)
