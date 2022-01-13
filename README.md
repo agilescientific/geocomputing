@@ -1,4 +1,4 @@
-`# geocomputing
+# geocomputing
 
 This is the main repository for Agile's geocomputing courses.
 

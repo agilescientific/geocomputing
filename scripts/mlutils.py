@@ -4,6 +4,7 @@
 import os
 import glob
 import random
+import itertools
 from collections import namedtuple
 
 import numpy as np
@@ -305,6 +306,43 @@ def plot_activation(f, domain=(-5, 5), **kwargs):
     ax.tick_params(axis='both', which='both', length=0)
 
     plt.legend(loc='upper left')
+    plt.show()
+
+    return
+
+def plot_confusion_matrix(y_true, y_pred, normalized=True):
+    """
+    The sklearn version of this function does not
+    allow you to pass in a cross_validation result.
+    """
+    # Compute confusion matrix
+    cnf_matrix = confusion_matrix(y_true, y_pred)
+    if normalized:
+        norm = (cnf_matrix.T / np.sum(cnf_matrix, axis=1)).T
+    else:
+        norm = cnf_matrix
+    classes = np.unique(y_true)
+
+    # Plot non-normalized confusion matrix.
+    plt.figure(figsize=(6, 6))
+    plt.imshow(norm, interpolation='nearest', cmap='Greens', vmin=0, vmax=1)
+    plt.title("Confusion matrix")
+    plt.colorbar(shrink=0.67)
+    tick_marks = np.arange(len(classes))
+    plt.xticks(tick_marks, classes, rotation=45)
+    plt.yticks(tick_marks, classes)
+
+    # Print the support numbers inside the plot.
+    thresh = cnf_matrix.max() / 2.
+    for i, j in itertools.product(range(cnf_matrix.shape[0]), range(cnf_matrix.shape[1])):
+        plt.text(j, i, format(cnf_matrix[i, j], 'd'),
+                horizontalalignment="center",
+                color="white" if cnf_matrix[i, j] > thresh else "black")
+
+    plt.ylabel('True label')
+    plt.xlabel('Predicted label')
+    plt.ylim(5.5, -0.5)  # Bug in mpl.
+    plt.tight_layout()
     plt.show()
 
     return
