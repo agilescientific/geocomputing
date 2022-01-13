@@ -4,9 +4,13 @@ This is the main repository for Agile's geocomputing courses.
 
 The main features:
 
+- There is one main script, `geocomputing.py`, which execute one of three commands:
+  - `build` &mdash; Build an individual course. This command has several options, see `./geocomputing.py build --help`.
+  - `publish` &mdash; Publish a group of courses to AWS. By default it publishes all `'production'` courses.
+  - `test` &mdash; Test that an individual course builds.
 - There is one control file per course, e.g. `geocomp.yaml`. This file contains the metadata for the course, including the curriculum and a list of its notebooks.
-- There is one main environment file, `environment.yaml`. This contains packages to be installed for (i.e. common to)  all courses. A course's YAML control file lists any other packages to install for that class.
-- There is one main script, `build.py`, which builds a course's ZIP file. Run it from the command line, with the course to build, see beow.
+- There is one over-arching control file, `config.yaml`. This file contains a default group, `'production'`, which lists all the courses that will be built by the `publish` command with its default argument.
+- There is one main, common environment file, `environment.yaml`. This contains packages to be installed for (i.e. common to)  all courses. A course's YAML control file lists any other packages to install for that class.
 
 
 ## Requirements
@@ -15,14 +19,23 @@ In order to build files, you will need the following:
 
 - Python 3.8+.
 - Everything in `dev_requirements.txt`.
-- If you want to upload to AWS S3, you'll need to install `boto3` as well, and have credentials set up on your machine. The easiest way to manage an AWS environment on your computer is probably via the AWS CLI.
+- If you want to upload to AWS S3, you'll need to install `boto3` and `botocore` as well, and have credentials set up on your machine. The easiest way to manage an AWS environment on your computer is probably via the AWS CLI.
 
 
 ## Usage
 
-Run the `build.py` script like this to build the `geocomp` (_Intro to Geocomputing_) class:
+To see high-level help:
 
-    ./build.py geocomp
+    ./geocomputing.py
+
+
+### Usage of `build`
+
+Run the `geocomputing.py` script like this to build the `geocomp` (_Intro to Geocomputing_) class:
+
+    ./geocomputing.py build geocomp
+
+You can build any course for which a YAML file exists. So the command above will compile the course specified by `geocomp.yaml`.
 
 You can pass the following options:
 
@@ -31,9 +44,25 @@ You can pass the following options:
 - **`--upload` / `--no-upload`** &mdash; Whether to **upload** the zip file to `geocomp.s3.amazonaws.com`. Default: `no-upload`. Note that this requires AWS credentials to be set up on your machine.
 - **`--clobber` / `--no-clobber`** &mdash; Whether to silently overwrite existing ZIP file and/or build directory. If `no-clobber`, the CLI will prompt you to overwrite or not. Default: `no-clobber`.
 
-To build the machine learning course, silently overwriting any existing things, and upload the zip to AWS:
+To build the machine learning course, silently overwriting any existing builds on your system:
 
-    ./build.py geocomp-ml --clobber --upload
+    ./geocomputing.py build geocomp-ml --clobber
+
+
+### Usage of `publish`
+
+Publish everything listed under the specified 'group' in `config.yaml`. By default, it looks for the courses in the `'production'` group. so this will build all of those courses and upload the ZIP files to AWS:
+
+    ./geocomputing.py publish
+
+
+### Usage of `test`
+
+Tests that a specific course builds, leaving no sawdust. Builds a course, does not make a ZIP, does not uplad anything, and removes the build folder. (To keep the build folder or make a zip, use the `build` command with the appropriate options, see above.) Here's how to test the machine learning course:
+
+    ./geocomputing.py test geocomp-ml
+
+In general, if a course does not build, the script will throw an error. It does not try to deal with or interpret the error or explain what's wrong.
 
 
 ## Example control file
