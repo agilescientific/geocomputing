@@ -1,3 +1,4 @@
+# For special class, 20 January 2022.
 title: Machine Learning for Subsurface
 conda:
   - umap-learn
@@ -8,22 +9,23 @@ pip:
   - scikit-som
 scripts:
   - mlutils.py  # Copied to all notebook directories.
+references:
+  - Choromanska_etal.pdf
+  - Dramsch_2020.pdf
+  - Karpatne_etal_2017.pdf
+  - ML_project_review_checklist.pdf
+  - Reichstein_etal_2019.pdf
 curriculum:
   1:
     - Installation and setup
     - Quick course overview
-    - Introductions
     - What is machine learning?
+    - Intro_to_regression.ipynb
     - Pandas_for_ML_data_management.ipynb
-    - A quick introduction to supervised classification
     - Check out and feedback
   2:
     - Check in and review
-    - Multiclass_classification.ipynb
-    - Check out and feedback
-  3:
-    - Check in and review
-    - Multiclass_classification.ipynb
+    - Multiclass_classification_short_version.ipynb
     - Check out and feedback
   4:
     - Check in and review
@@ -32,21 +34,14 @@ curriculum:
   5:
     - Check in and review
     - Image_classification.ipynb
-    - Latent_semantic_analysis.ipynb
-    - Map_interpolation.ipynb
-    - Unsupervised_clustering_on_rock_properties.ipynb
+    - Image_classification_with_PyTorch.ipynb
     - Check out and feedback
 extras:
   - All_the_activation_functions.ipynb
   - Binary_classification.ipynb
   - What_is_gradient_descent.ipynb
-  - Image_classification.ipynb
-  - Image_classification_with_PyTorch.ipynb
-  - Image_classification_with_skorch.ipynb
   - Intro_to_classification.ipynb
-  - Intro_to_neural_networks.ipynb
   - Intro_to_NumPy_for_ML.ipynb
-  - Intro_to_regression.ipynb
   - Latent_semantic_analysis.ipynb
   - Loading_messy_data.ipynb
   - Map_interpolation.ipynb
@@ -54,11 +49,6 @@ extras:
   - Multiclass_classification.ipynb
   - Pandas_for_timeseries.ipynb
   - Quick_intro_to_Dask.ipynb
-  - Read_and_write_LAS.ipynb
-  - Read_SEG-Y_with_segyio.ipynb
   - Regression_with_Scikit-Learn.ipynb
-  - Reproducing_Roeth_and_Tarantola_1994.ipynb
   - Requests_from_geofignet_API.ipynb
-  - Transfer_learning_Mobilenet_with_Fastai_on_Colab.ipynb
-  - Transfer_learning_RESNET_inference_only.ipynb
   - Transfer_learning_RESNET_with_PyTorch_on_Colab.ipynb

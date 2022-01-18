@@ -53,4 +53,3 @@ extras:
   - Read_SEG-Y_with_segyio.ipynb
   - Regression_with_Scikit-Learn.ipynb
   - Requests_from_geofignet_API.ipynb
-
