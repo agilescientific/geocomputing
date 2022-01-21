@@ -8,6 +8,12 @@ pip:
   - scikit-som
 scripts:
   - mlutils.py  # Copied to all notebook directories.
+references:
+  - Choromanska_etal.pdf
+  - Dramsch_2020.pdf
+  - Karpatne_etal_2017.pdf
+  - ML_project_review_checklist.pdf
+  - Reichstein_etal_2019.pdf
 curriculum:
   1:
     - Installation and setup
