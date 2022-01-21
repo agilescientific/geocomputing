@@ -242,7 +242,8 @@ def build_environment(path, config):
             print(e)
 
     # Now add the course-specific stuff from the config.
-    conda = {'name': config['course']}  # This puts name first.
+    name = config.get('environment', config['course']).lower()
+    conda = {'name': name}
     conda.update(deps)
     if isinstance(conda['dependencies'][-1], dict):
         pip = conda['dependencies'].pop()

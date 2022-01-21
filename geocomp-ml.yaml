@@ -1,4 +1,5 @@
 title: Machine Learning for Subsurface
+environment: geoml  # Optional name of environment (otherwise uses class name)
 conda:
   - umap-learn
   - hdbscan

@@ -1,5 +1,6 @@
 # For special class, 20 January 2022.
 title: Machine Learning for Subsurface
+environment: geoml  # Optional name of environment (otherwise uses class name)
 conda:
   - umap-learn
   - hdbscan
