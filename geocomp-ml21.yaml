@@ -1,19 +1,13 @@
 title: Machine Learning for Subsurface
-environment: geoml  # Optional name of environment (otherwise uses class name)
 conda:
   - umap-learn
   - hdbscan
   - verde
+  - fastchan::fastai
 pip:
   - scikit-som
 scripts:
   - mlutils.py  # Copied to all notebook directories.
-references:
-  - Choromanska_etal.pdf
-  - Dramsch_2020.pdf
-  - Karpatne_etal_2017.pdf
-  - ML_project_review_checklist.pdf
-  - Reichstein_etal_2019.pdf
 curriculum:
   1:
     - Installation and setup
@@ -33,7 +27,7 @@ curriculum:
     - Check out and feedback
   4:
     - Check in and review
-    - Regression_with_Scikit-Learn.ipynb
+    - Intro_to_neural_networks.ipynb
     - Check out and feedback
   5:
     - Check in and review
@@ -43,10 +37,14 @@ curriculum:
     - Unsupervised_clustering_on_rock_properties.ipynb
     - Check out and feedback
 extras:
+  - All_the_activation_functions.ipynb
   - Binary_classification.ipynb
   - What_is_gradient_descent.ipynb
   - Image_classification.ipynb
+  - Image_classification_with_PyTorch.ipynb
+  - Image_classification_with_skorch.ipynb
   - Intro_to_classification.ipynb
+  - Intro_to_neural_networks.ipynb
   - Intro_to_NumPy_for_ML.ipynb
   - Intro_to_regression.ipynb
   - Latent_semantic_analysis.ipynb
@@ -59,4 +57,8 @@ extras:
   - Read_and_write_LAS.ipynb
   - Read_SEG-Y_with_segyio.ipynb
   - Regression_with_Scikit-Learn.ipynb
+  - Reproducing_Roeth_and_Tarantola_1994.ipynb
   - Requests_from_geofignet_API.ipynb
+  - Transfer_learning_Mobilenet_with_Fastai_on_Colab.ipynb
+  - Transfer_learning_RESNET_inference_only.ipynb
+  - Transfer_learning_RESNET_with_PyTorch_on_Colab.ipynb
