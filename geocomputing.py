@@ -38,56 +38,74 @@ def cli():
 
 
 @cli.command()
-@click.argument('group', default='production')
-def publish(group):
+@click.argument('course', type=str, required=False)
+@click.option('--all', is_flag=True, help="Publishes all courses listed in all.yaml")
+def publish(course, all):
     """
-    Publish a group of courses to AWS.
+    Publish COURSE to AWS.
     """
-    with open(f"config.yaml", 'rt') as f:
-        try:
-            config = yaml.safe_load(f)
-        except yaml.YAMLError as e:
-            print(e)
+    courses = get_courses(course, all)
 
-    for course in config[group]:
-        click.echo(f"Publishing {course}. Ctrl-C to abort.")
+    for i, course in enumerate(courses):
+        click.echo(f"Publishing {course} ({i+1}/{len(courses)+1}). Ctrl-C to abort.")
         _ = build_course(course, clean=True, zip=True, upload=True, clobber=True)
-        click.echo(f"Done.")
-        click.echo()
+        click.echo(f"Finished.\n")
 
     return
 
 
 @cli.command()
-@click.argument('course', required=True)
-def test(course):
+@click.argument('course', type=str, required=False)
+@click.option('--all', is_flag=True, help="Tests all courses listed in all.yaml")
+def test(course, all):
     """
-    Test that an individual course builds.
+    Test that COURSE builds.
     """
-    click.echo(f"Testing {course}. Ctrl-C to abort.")
+    courses = get_courses(course, all)
 
-    _ = build_course(course, clean=True, zip=False, upload=False, clobber=True)
-
-    # If there's a problem, the build should error.
-    click.echo("Test complete.")
+    for i, course in enumerate(courses):
+        click.echo(f"Testing {course} ({i+1}/{len(courses)+1}). Ctrl-C to abort.")
+        _ = build_course(course, clean=True, zip=False, upload=False, clobber=True)
+        click.echo(f"Test complete.\n")
 
     return
 
 
 @cli.command()
-@click.argument('course')
+@click.argument('course', required=True, type=str)
 @click.option('--clean/--no-clean', default=True, help="Delete the build dir? Default: clean.")
 @click.option('--zip/--no-zip', default=True, help="Make the zip file? Default: zip.")
 @click.option('--upload/--no-upload', default=False, help="Upload the ZIP to S3? Default: no-upload.")
 @click.option('--clobber/--no-clobber', default=False, help="Clobber existing files? Default: no-clobber.")
 def build(course, clean, zip, upload, clobber):
     """
-    Build an individual course.
+    Build COURSE with various options.
     """
     click.echo(f"Building {course}. Ctrl-C to abort.")
     return build_course(course, clean, zip, upload, clobber)
 
 # =============================================================================
+def get_courses(course, all):
+    """
+    Returns the list of courses to process.
+    """
+    if (not all) and (course is None):
+        message = "Missing argument 'COURSE', or use '--all'."
+        raise click.UsageError(message)
+    elif all and (course is not None):
+        message = "'--all' cannot be used with 'COURSE'; use one or the other."
+        raise click.BadOptionUsage('--all', message)
+    elif all and (course is None):
+        with open(f"all.yaml", 'rt') as f:
+            try:
+                courses = yaml.safe_load(f)
+            except yaml.YAMLError as e:
+                print(e)
+    else:
+        courses = [course]
+
+    return courses
+
 
 def build_course(course, clean, zip, upload, clobber):
     """

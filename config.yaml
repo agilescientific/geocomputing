@@ -1,6 +1,0 @@
-production:  # Only these will be published.
-  - geocomp
-  - geocomp-ml
-  - geocomp-gp
-  - geocomp-gg
-# Add more sections below as needed.
