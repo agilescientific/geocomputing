@@ -254,7 +254,8 @@ def build_environment(path, config):
     conda['dependencies'].append(pip)
 
     # Write the new environment file to the course directory.
-    with open(path / 'environment.yaml', 'w') as f:
+    # Despite YAML recommended practice, we need to use .yml for conda.
+    with open(path / 'environment.yml', 'w') as f:
         f.write(yaml.dump(conda, default_flow_style=False, sort_keys=False))
     return
 
