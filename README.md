@@ -5,9 +5,10 @@ This is the main repository for Agile's geocomputing courses.
 The main features:
 
 - There is one main script, `geocomputing.py`, which execute one of three commands:
-  - `build` &mdash; Build an individual course. This command has several options, see `./geocomputing.py build --help`.
-  - `publish` &mdash; Publish a group of courses to AWS. By default it publishes all `'production'` courses.
-  - `test` &mdash; Test that an individual course builds.
+  - `build` &mdash; Build an individual course, or all courses listed in `all.yaml`. This command has several options, see `./geocomputing.py build --help`.
+  - `clean` &mdash; Remove the build files associated with a course, or all courses listed in `all.yaml`.
+  - `publish` &mdash; Publish an individual course to AWS, or all courses listed in `all.yaml`.
+  - `test` &mdash; Test that an individual course builds, or all courses listed in `all.yaml`.
 - There is one control file per course, e.g. `geocomp.yaml`. This file contains the metadata for the course, including the curriculum and a list of its notebooks.
 - There is one over-arching control file, `config.yaml`. This file contains a default group, `'production'`, which lists all the courses that will be built by the `publish` command with its default argument.
 - There is one main, common environment file, `environment.yaml`. This contains packages to be installed for (i.e. common to)  all courses. A course's YAML control file lists any other packages to install for that class.
@@ -17,7 +18,7 @@ The main features:
 
 In order to build files, you will need the following:
 
-- Python 3.8+.
+- Python 3.9+.
 - Everything in `dev_requirements.txt`.
 - If you want to upload to AWS S3, you'll need to install `boto3` and `botocore` as well, and have credentials set up on your machine. The easiest way to manage an AWS environment on your computer is probably via the AWS CLI.
 
@@ -58,9 +59,11 @@ Publish everything listed under the specified 'group' in `config.yaml`. By defau
 
 ### Usage of `test`
 
-Tests that a specific course builds, leaving no sawdust. Builds a course, does not make a ZIP, does not uplad anything, and removes the build folder. (To keep the build folder or make a zip, use the `build` command with the appropriate options, see above.) Here's how to test the machine learning course:
+Tests that a specific course builds, leaving no sawdust, or use the `--all` option to test all courses in `all.yaml`. This command builds a course, does not make a ZIP, does not uplad anything, and removes the build folder. (To keep the build folder or make a zip, use the `build` command with the appropriate options, see above.) Here's how to test the machine learning course:
 
     ./geocomputing.py test geocomp-ml
+
+There is an option `--environment` that will also generate an environment file called `environment-all.yml`. (This is used for automated testing on GitHub.)
 
 In general, if a course does not build, the script will throw an error. It does not try to deal with or interpret the error or explain what's wrong.
 

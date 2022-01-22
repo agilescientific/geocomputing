@@ -10,6 +10,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
+        include:
+          - os: windows-latest
+            command: C:\Miniconda\condabin\conda env create -f environment.yml
+          - os: ubuntu-latest
+            command: conda env create -f environment-all.yml
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repo content
@@ -27,4 +32,4 @@ jobs:
           python ./geocomputing.py test --environment --all
       - name: Test conda environment
         run: |
-          conda env create -f environment-all.yml
+          ${{ matrix.command }}
