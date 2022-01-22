@@ -7,6 +7,7 @@ on:
 jobs:
   test-builds:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
     runs-on: ${{ matrix.os }}
@@ -23,7 +24,7 @@ jobs:
           pip install -r dev-requirements.txt
       - name: Test all courses build
         run: |
-          python ./geocomputing.py test --all --environment
+          python ./geocomputing.py test --environment --all
       - name: Test conda environment
         run: |
           conda env create -f environment-all.yml
