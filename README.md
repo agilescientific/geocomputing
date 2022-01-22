@@ -5,10 +5,11 @@ This is the main repository for Agile's geocomputing courses.
 The main features:
 
 - There is one main script, `geocomputing.py`, which execute one of three commands:
-  - `build` &mdash; Build an individual course, or all courses listed in `all.yaml`. This command has several options, see `./geocomputing.py build --help`.
-  - `clean` &mdash; Remove the build files associated with a course, or all courses listed in `all.yaml`.
-  - `publish` &mdash; Publish an individual course to AWS, or all courses listed in `all.yaml`.
-  - `test` &mdash; Test that an individual course builds, or all courses listed in `all.yaml`.
+  - `build` &mdash; Build a course or courses. This command has several options, see `./geocomputing.py build --help`.
+  - `clean` &mdash; Remove the build files associated with a course or courses.
+  - `publish` &mdash; Publish a course or courses to AWS.
+  - `test` &mdash; Test that a course builds.
+- All of the commands take either a single course name, or the `--all` flag, which applies the command to all the courses listed in `all.yaml`.
 - There is one control file per course, e.g. `geocomp.yaml`. This file contains the metadata for the course, including the curriculum and a list of its notebooks.
 - There is one over-arching control file, `config.yaml`. This file contains a default group, `'production'`, which lists all the courses that will be built by the `publish` command with its default argument.
 - There is one main, common environment file, `environment.yaml`. This contains packages to be installed for (i.e. common to)  all courses. A course's YAML control file lists any other packages to install for that class.
@@ -38,7 +39,9 @@ Run the `geocomputing.py` script like this to build the `geocomp` (_Intro to Geo
 
 You can build any course for which a YAML file exists. So the command above will compile the course specified by `geocomp.yaml`.
 
-You can pass the following options:
+All of the commands can take the option `--all`. This will apply the command to all of the courses listed in `all.yaml`. In this case, don't pass any individual course name.
+
+In addition, you can pass the following options:
 
 - **`--clean` / `--no-clean`** &mdash; Whether to delete the build files. Default: `clean`.
 - **`--zip` / `--no-zip`** &mdash; Whether to **create** the zip file for the course repo. Default: `zip`.
@@ -50,11 +53,18 @@ To build the machine learning course, silently overwriting any existing builds o
     ./geocomputing.py build geocomp-ml --clobber
 
 
+### Usage of `clean`
+
+Cleans the build files for a course. I.e. everything in `build` and its ZIP file.
+
+    ./geocomputing.py clean geocomp-ml
+
+
 ### Usage of `publish`
 
-Publish everything listed under the specified 'group' in `config.yaml`. By default, it looks for the courses in the `'production'` group. so this will build all of those courses and upload the ZIP files to AWS:
+Publish a course, or those listed in `all.yaml`. The ZIP file(s) will be uploaded to AWS. For example, to publish all the courses:
 
-    ./geocomputing.py publish
+    ./geocomputing.py publish --all
 
 
 ### Usage of `test`
@@ -74,6 +84,7 @@ A course must have a YAML control file containing something like the following e
 
 ```yaml
 title: Introduction to Python for Geologists
+environment: geogeol  # Only if different from course name.
 conda:  # Extra conda packages, as well as all of standard geocomp env.
   - verde
 pip:  # Extra pip packages.
