@@ -39,6 +39,36 @@ def cli():
 
 @cli.command()
 @click.argument('course', type=str, required=False)
+@click.option('--all', is_flag=True, help="Cleans all courses listed in all.yaml")
+def clean(course, all):
+    """
+    Clean COURSE builds from local storage.
+    """
+    courses = get_courses(course, all)
+
+    for i, course in enumerate(courses):
+        click.echo(f"Cleaning {course} ({i+1} of {len(courses)}).")
+        try:
+            shutil.rmtree(pathlib.Path('build').joinpath(course))
+        except FileNotFoundError:
+            pass
+        try:
+            pathlib.Path(f'{course}.zip').unlink()
+        except FileNotFoundError:
+            pass
+        try:
+            if not any(pathlib.Path('build').iterdir()):
+                click.echo(f"Removing build directory.")
+                shutil.rmtree(pathlib.Path('build'))
+        except:
+            pass
+    click.echo(f"Finished.\n")
+
+    return
+
+
+@cli.command()
+@click.argument('course', type=str, required=False)
 @click.option('--all', is_flag=True, help="Publishes all courses listed in all.yaml")
 def publish(course, all):
     """
@@ -49,7 +79,7 @@ def publish(course, all):
     for i, course in enumerate(courses):
         click.echo(f"Publishing {course} ({i+1}/{len(courses)+1}). Ctrl-C to abort.")
         _ = build_course(course, clean=True, zip=True, upload=True, clobber=True)
-        click.echo(f"Finished.\n")
+    click.echo(f"Finished.\n")
 
     return
 
@@ -57,32 +87,59 @@ def publish(course, all):
 @cli.command()
 @click.argument('course', type=str, required=False)
 @click.option('--all', is_flag=True, help="Tests all courses listed in all.yaml")
-def test(course, all):
+@click.option('--environment', is_flag=True, help="Build a global environment file for testing.")
+def test(course, all, environment):
     """
-    Test that COURSE builds.
+    Test that COURSE builds without error.
     """
     courses = get_courses(course, all)
 
+    envs = []
     for i, course in enumerate(courses):
+        clean = 1 - environment  # Clean if we're not doing env.
         click.echo(f"Testing {course} ({i+1}/{len(courses)+1}). Ctrl-C to abort.")
-        _ = build_course(course, clean=True, zip=False, upload=False, clobber=True)
-        click.echo(f"Test complete.\n")
+        env = build_course(course, clean=clean, zip=False, upload=False, clobber=True)
+        envs.append(env)
+    click.echo(f"Finished.\n")
+
+    if environment:
+        # Build the combined environment.
+        channels, conda, pip = set(), set(), set()
+        for env in envs:
+            channels.update(env['channels'])
+            conda.update(env['dependencies'][:-1])  # All except pip.
+            pip.update(env['dependencies'][-1]['pip'])
+        env = {
+            'name': 'geocomp-all',
+            'channels': list(channels),
+            'dependencies': list(conda) + [{'pip': list(pip)}],
+        }
+        with open('environment-all.yml', 'w') as f:
+            f.write(yaml.dump(env, default_flow_style=False, sort_keys=False))
+        click.echo(f"Global environment file written.\n")
 
     return
 
 
 @cli.command()
-@click.argument('course', required=True, type=str)
+@click.argument('course', type=str, required=False)
 @click.option('--clean/--no-clean', default=True, help="Delete the build dir? Default: clean.")
 @click.option('--zip/--no-zip', default=True, help="Make the zip file? Default: zip.")
 @click.option('--upload/--no-upload', default=False, help="Upload the ZIP to S3? Default: no-upload.")
 @click.option('--clobber/--no-clobber', default=False, help="Clobber existing files? Default: no-clobber.")
+@click.option('--all', is_flag=True, help="Tests all courses listed in all.yaml")
 def build(course, clean, zip, upload, clobber):
     """
     Build COURSE with various options.
     """
-    click.echo(f"Building {course}. Ctrl-C to abort.")
-    return build_course(course, clean, zip, upload, clobber)
+    courses = get_courses(course, all)
+
+    for i, course in enumerate(courses):
+        click.echo(f"Building {course} ({i+1}/{len(courses)+1}). Ctrl-C to abort.")
+        _ = build_course(course, clean, zip, upload, clobber)
+    click.echo(f"Finished.\n")
+
+    return
 
 # =============================================================================
 def get_courses(course, all):
@@ -115,12 +172,12 @@ def build_course(course, clean, zip, upload, clobber):
     Args:
         course (str): The course to build. One of geocomp, geocomp-ml, geocomp-gp, etc.
         clean (bool): Whether to remove the build files.
-        zip (bool): Whether to create the zip file for the course repo.
+        zip (bool): Whether to create the zip file for the course repo (or to save it if uploading).
         upload (bool): Whether to attempt to upload the ZIP to AWS.
         clobber (bool): Whether to overwrite existing ZIP file and build directory. 
 
     Returns:
-        None.
+        dict. Environment dictionary.
     """
     # Read the YAML control file.
     with open(f"{course.removesuffix('.yaml')}.yaml", 'rt') as f:
@@ -171,14 +228,14 @@ def build_course(course, clean, zip, upload, clobber):
         for fname in refs:
             shutil.copyfile(pathlib.Path('references') / fname, ref_path / fname)
 
-     # Make the environment.yaml file.
-    build_environment(path, config)
+    # Make the environment.yaml file.
+    env = build_environment(path, config)
 
     # Make the README.
-    build_readme(path, config)
+    _ = build_readme(path, config)
 
     # Zip it.
-    if zip:
+    if zip or upload:
         zipped = shutil.make_archive(course, 'zip', root_dir=build_path, base_dir=course)
         click.echo(f"Created {zipped}")
 
@@ -187,13 +244,15 @@ def build_course(course, clean, zip, upload, clobber):
         success = upload_zip(zipped)
         if success:
             click.echo(f"Uploaded {zipped}")
+        if not zip:
+            pathlib.Path(f'{course}.zip').unlink()
 
     # Remove build.
     if clean:
         shutil.rmtree(path)
         click.echo(f"Removed build files.")
 
-    return
+    return env
 
 
 def build_notebooks(path, config):
@@ -275,7 +334,7 @@ def build_environment(path, config):
     # Despite YAML recommended practice, we need to use .yml for conda.
     with open(path / 'environment.yml', 'w') as f:
         f.write(yaml.dump(conda, default_flow_style=False, sort_keys=False))
-    return
+    return conda
 
 
 def build_readme(path, config):
