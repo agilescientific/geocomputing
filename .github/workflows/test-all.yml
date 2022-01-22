@@ -25,6 +25,5 @@ jobs:
         run: |
           python ./geocomputing.py test --all --environment
       - name: Test conda environment
-        uses: mamba-org/provision-with-micromamba@v11
-        with:
-          environment-file: environment-all.yml
+        run: |
+          conda env create -f environment-all.yml
