@@ -1,5 +1,4 @@
 name: test-builds
-description: Install the dev environment, build the courses, and build the conda environment. 
 on:
   push:
     branches: [ develop ]
