@@ -3,8 +3,6 @@ conda:
   - umap-learn
   - hdbscan
   - verde
-pip:
-  - scikit-som
 curriculum:
   1:
     - Installation and setup
