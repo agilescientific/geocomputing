@@ -14,7 +14,7 @@ jobs:
           - os: windows-latest
             command: C:\Miniconda\condabin\conda env create -f environment-all.yml
           - os: ubuntu-latest
-            command: conda env create -f environment-all.yml
+            command: conda install mamba -y -c conda-forge; mamba env create -f environment-all.yml
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout repo content
