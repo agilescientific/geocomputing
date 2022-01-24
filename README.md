@@ -117,11 +117,3 @@ demos:  # These will be added to `demos` and NOT listed in the Curriculum.
 ```
 
 Only `title` and `curriculum` are required fields.
-
-
-## TODO
-
-- More testing (I've only really worked on `geocomp` and `geocomp-ml` in development).
-- Documentation of the control file options.
-- Proper tagging of `demo` notebooks, which is a new feature (testing in **Advanced_functions.ipynb**)
-- A thorough review of the content in each course.
