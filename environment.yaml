@@ -3,29 +3,29 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python>=3.9
+  - python=3.9
   - pip
-  - numpy
-  - scipy
-  - matplotlib
+  - numpy>=1.19
+  - scipy>=1.7
+  - matplotlib>=3.5
   - jupyter
   - jupyterlab
   - ipykernel
   - ipywidgets
-  - pandas
+  - pandas>=1.4
   - geopandas
-  - scikit-learn
-  - pillow
+  - scikit-learn>=1.0
+  - pillow>=8.1
   - h5py
-  - seaborn
+  - seaborn>=0.11
   - pint
-  - cartopy
-  - xarray
+  - cartopy>=0.20
+  - xarray>=0.20
   - requests
   - tqdm
   - pip:
-    - bruges
-    - welly
+    - bruges>=0.4
+    - welly>=0.4
     - wellpathpy
     - segyio
     - dlisio
