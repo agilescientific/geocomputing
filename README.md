@@ -1,5 +1,8 @@
 # geocomputing
 
+[![test-builds](https://github.com/agile-geoscience/geocomputing/actions/workflows/test-all.yml/badge.svg)](https://github.com/agile-geoscience/geocomputing/actions/workflows/test-all.yml)
+[![publish-classes-to-S3](https://github.com/agile-geoscience/geocomputing/actions/workflows/publish.yml/badge.svg)](https://github.com/agile-geoscience/geocomputing/actions/workflows/publish.yml)
+
 This is the main repository for Agile's geocomputing courses.
 
 The main features:
