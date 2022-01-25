@@ -4,14 +4,14 @@ This is the main repository for Agile's geocomputing courses.
 
 The main features:
 
-- There is one main script, `geocomputing.py`, which execute one of three commands:
+- There is one main script, `geocomputing.py`, which execute one of four commands:
   - `build` &mdash; Build a course or courses. This command has several options, see `./geocomputing.py build --help`.
   - `clean` &mdash; Remove the build files associated with a course or courses.
   - `publish` &mdash; Publish a course or courses to AWS.
   - `test` &mdash; Test that a course builds.
 - All of the commands take either a single course name, or the `--all` flag, which applies the command to all the courses listed in `all.yaml`.
 - There is one control file per course, e.g. `geocomp.yaml`. This file contains the metadata for the course, including the curriculum and a list of its notebooks.
-- There is one over-arching control file, `config.yaml`. This file contains a default group, `'production'`, which lists all the courses that will be built by the `publish` command with its default argument.
+- There is one more control file, `all.yaml`, which lists all the courses that will be built by the various commanda when the `--all` flag is set.
 - There is one main, common environment file, `environment.yaml`. This contains packages to be installed for (i.e. common to)  all courses. A course's YAML control file lists any other packages to install for that class.
 
 
