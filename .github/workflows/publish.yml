@@ -14,13 +14,13 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - name: Install geocomputing development dependencies
+      - name: Install kosu
         run: |
           python -m pip install --upgrade pip
-          pip install -r dev-requirements.txt
+          pip install kosu
       - name: Upload ZIP files to S3
         env:
           AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
           AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
         run: |
-          python ./geocomputing.py publish --all
+          kosu publish --all

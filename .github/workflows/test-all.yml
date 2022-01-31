@@ -23,13 +23,13 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
-      - name: Install geocomputing development dependencies
+      - name: Install kosu
         run: |
           python -m pip install --upgrade pip
-          pip install -r dev-requirements.txt
+          pip install -kosu
       - name: Test all courses build
         run: |
-          python ./geocomputing.py test --environment --all
+          kosu test --environment --all
       - name: Test conda environment
         run: |
           ${{ matrix.command }}
