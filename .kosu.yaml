@@ -1,5 +1,5 @@
-s3-bucket: "geocomp"
-s3-path: "data"
+s3-bucket: geocomp
+s3-path: data
 all:  # What --all means.
   - geocomp
   - geocomp-ml
