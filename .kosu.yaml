@@ -1,6 +1,22 @@
+# Notebooks.
+notebooks-source: notebooks
+notebooks-target: notebooks
+master-target: master
+demos-target: demos
+
+# Other content.
+references-source: references
+references-target: references
+scripts-source: scripts
+images-source: images
+images-target: images
+
+# AWS S3 storage.
 s3-bucket: geocomp
 s3-path: data
-all:  # What --all means.
+
+# What --all means.
+all:
   - geocomp
   - geocomp-ml
   - geocomp-gp
