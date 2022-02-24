@@ -1,5 +1,5 @@
 # Notebooks.
-notebooks-source: notebooks
+notebooks-source: prod
 notebooks-target: notebooks
 master-target: master
 demos-target: demos
