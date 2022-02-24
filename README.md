@@ -13,8 +13,9 @@ In order to build files, you will need the following:
 - Python 3.9+.
 - The course-building package, `kosu`. To install it:
 
-    pip install kosu
-
+```shell
+pip install kosu
+```
 
 ## Usage
 
