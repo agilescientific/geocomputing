@@ -23,6 +23,7 @@ dependencies:
   - xarray>=0.20
   - requests
   - tqdm
+  - pooch
   - pip:
     - bruges>=0.4
     - welly>=0.4
