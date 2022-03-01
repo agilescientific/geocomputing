@@ -1,12 +1,38 @@
 title: Deep Learning for Subsurface
 environment: geoml
 conda:
-  - umap-learn
-  - hdbscan
-  - verde
   - fastchan::fastai
 pip:
-  - scikit-som
+  - skorch
+curriculum:
+  1a:
+    - Installation and setup
+    - Quick course overview
+    - Introductions
+    - Deep learning vs shallow learning
+    - Intro_to_NumPy_and_PyTorch.ipynb  # Done. Could add more PyTorch.
+  1b:
+    - What is a neural network?
+    - Intro_to_neural_networks.ipynb  # Done. Needs review and mpl function.
+    - Check out and feedback
+  2a:
+    - Check in and review
+    - Image_classification_with_PyTorch.ipynb  # Done, to check.
+    - Requests_from_geofignet_API.ipynb  # Done, to check.
+  2b:
+    - Reproducing_Roeth_and_Tarantola_1994.ipynb  # Done, to check.
+    - Check out and feedback
+extras:
+  - All_the_activation_functions.ipynb
+  - Intro_to_NumPy_for_deep_learning.ipynb
+  - Neural_networks_from_scratch.ipynb
+  - Pandas_for_ML_data_management.ipynb
+  - Pandas_for_timeseries.ipynb
+  - Read_and_write_LAS.ipynb
+  - Read_SEG-Y_with_segyio.ipynb
+  - Transfer_learning_RESNET_inference_only.ipynb
+  - Transfer_learning_RESNET_with_PyTorch_on_Colab.ipynb
+  - What_is_gradient_descent.ipynb  # Could add PyTorch.optim version of example.
 scripts:
   - mlutils.py  # Copied to all notebook directories.
 references:
@@ -15,40 +41,3 @@ references:
   - Karpatne_etal_2017.pdf
   - ML_project_review_checklist.pdf
   - Reichstein_etal_2019.pdf
-curriculum:
-  1:
-    - Installation and setup
-    - Quick course overview
-    - Introductions
-    - Intro_to_NumPy_for_ML.ipynb
-#    - Intro_to_neural_networks.ipynb  # New thing not ready yet.
-    - Check out and feedback
-  2:
-    - Check in and review
-    - Neural_networks_from_scratch.ipynb
-    - What_is_gradient_descent.ipynb
-    - Check out and feedback
-  3:
-    - Check in and review
-    - Image_classification.ipynb
-    - Image_classification_with_PyTorch.ipynb
-    - Requests_from_geofignet_API.ipynb
-    - Check out and feedback
-  4:
-    - Check in and review
-    - Making_maps_with_ML.ipynb
-    - Check out and feedback
-  5:
-    - Check in and review
-    - Reproducing_Roeth_and_Tarantola_1994.ipynb
-    - Check out and feedback
-extras:
-  - All_the_activation_functions.ipynb
-  - Image_classification_with_skorch.ipynb
-  - Mis-steps_in_machine_learning.ipynb
-  - Pandas_for_ML_data_management.ipynb
-  - Pandas_for_timeseries.ipynb
-  - Read_and_write_LAS.ipynb
-  - Read_SEG-Y_with_segyio.ipynb
-  - Transfer_learning_RESNET_inference_only.ipynb
-  - Transfer_learning_RESNET_with_PyTorch_on_Colab.ipynb
