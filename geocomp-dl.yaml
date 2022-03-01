@@ -24,7 +24,7 @@ curriculum:
     - Check out and feedback
 extras:
   - All_the_activation_functions.ipynb
-  - Intro_to_NumPy_for_deep_learning.ipynb
+  - Intro_to_NumPy_for_ML.ipynb
   - Neural_networks_from_scratch.ipynb
   - Pandas_for_ML_data_management.ipynb
   - Pandas_for_timeseries.ipynb
