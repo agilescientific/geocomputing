@@ -13,7 +13,7 @@ curriculum:
     - Intro_to_NumPy_and_PyTorch.ipynb  # Done. Could add more PyTorch.
   1b:
     - What is a neural network?
-    - Intro_to_neural_networks.ipynb  # Done. Needs review and mpl function.
+    - Intro_to_neural_networks.ipynb  # Done.
     - Check out and feedback
   2a:
     - Check in and review

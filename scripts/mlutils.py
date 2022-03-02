@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
+"""
+Various utilities for Agile's machine learning classes.
+"""
 import os
 import glob
 import random
@@ -8,16 +9,17 @@ import itertools
 from collections import namedtuple
 
 import numpy as np
+import pandas as pd
 from PIL import Image
 import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix
-from scipy.spatial.distance import pdist, cdist, squareform
+from matplotlib.cm import get_cmap
+import matplotlib.ticker as plticker
+from matplotlib.colors import LinearSegmentedColormap
+from matplotlib.colors import ListedColormap
+from scipy.spatial.distance import cdist
 from scipy.stats import mode
 
-# These are used for the comparison plot:
-from matplotlib.colors import LinearSegmentedColormap
-import pandas as pd
-from matplotlib.colors import ListedColormap
+from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import make_moons, make_circles, make_classification
@@ -325,6 +327,7 @@ def plot_activation(f, domain=(-5, 5), **kwargs):
 
     return
 
+
 def plot_confusion_matrix(y_true, y_pred, normalized=True):
     """
     The sklearn version of this function does not
@@ -574,6 +577,80 @@ def make_comparison_plot(classifiers=None, data=None,
     plt.tight_layout()
     plt.show()
     return 
+
+
+def plot_ribbons(*arrs, s=None, legend=None, cmap=None, classes=None, titles=None, ticks=None):
+    """
+    Plot one or more 1D arrays, e.g. of class labels, as ribbons.
+    The classes must be integers, eg transformed using LabelEncoder.
+
+    Args:
+        arrs: One or more 1D arrays of class labels.
+        s (tuple of ints): Optional slice tuple, e.g. `(None, 100)` to plot
+            only the first 100 samples.
+        legend (dict): A dictionary mapping class labels (natural names as
+            strings) to colours (eg hex strings).
+        cmap (str): A matplotlib colormap name.
+        classes (list): A list of class labels (natural names as strings).
+            Don't pass this if you pass a legend.
+        titles (list): A list of titles for the plots. By default, 2 arrs will
+            be labelled 'Actual' and 'Predicted'.
+        ticks (tuple): (minor, major) tick intervals on the y-axis.
+
+    Returns:
+        None.
+    """
+    if s is not None:
+        s = slice(*s)
+        
+    if legend and (classes is not None):
+        raise ValueError('Class names will be drawn from the legend; do not pass both. Set classes=None.')
+        
+    class_enc = np.unique(np.hstack([arr[s] for arr in arrs]))
+    mi, ma = class_enc[[0, -1]]
+    rng = ma - mi + 1
+
+    if legend is not None:
+        cmap = ListedColormap(legend.values(), 'indexed')
+        classes = list(legend.keys())
+    else:
+        if isinstance(cmap, str):
+            cmap = get_cmap(cmap)
+        else:
+            cmap = cmap or plt.cm.viridis
+        colours = [cmap(i) for i in np.linspace(0, 1, rng)]
+        cmap = ListedColormap(colours, 'indexed')
+        
+        classes = classes or class_enc
+        
+    if len(arrs) == 1:
+        titles = titles or ['Labels']
+    elif len(arrs) == 2:
+        titles = titles or ['Actual', 'Predicted']
+    else:
+        titles = titles or ['Actual'] + [f'Pred {n}' for n in range(len(arrs)-1)]
+        
+    fig, axs = plt.subplots(ncols=len(arrs), figsize=(2*len(arrs)+1, 12), sharey=True)
+
+    for ax, name, arr in zip(axs, titles, arrs):
+        im = ax.imshow(arr[s].reshape(-1, 1), aspect='auto', cmap=cmap, vmin=mi-0.5, vmax=ma+0.5, interpolation='none')
+        ax.set_title(name)
+        ax.xaxis.set_visible(False)
+        
+        if ticks is not None:
+            minor, major = ticks
+            if ax.get_subplotspec().is_first_col():
+                loc = plticker.MultipleLocator(base=minor)
+                ax.yaxis.set_minor_locator(loc)
+                loc = plticker.MultipleLocator(base=major)
+                ax.yaxis.set_major_locator(loc)
+
+    fig.subplots_adjust(right=0.8)
+    cbar_ax = fig.add_axes([0.85, 0.25, 0.05, 0.5])
+    cbar = fig.colorbar(im, ticks=class_enc, cax=cbar_ax)
+    cbar.ax.set_yticklabels(classes)
+    
+    return None
 
 
 if __name__ == '__main__':
