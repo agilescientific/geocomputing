@@ -1,4 +1,5 @@
-title: Deep Learning for Subsurface
+# 2-half-days deep learning intro class for science & engineering.
+title: Intro to Deep Learning for Subsurface
 environment: geoml
 conda:
   - fastchan::fastai
@@ -6,7 +7,6 @@ pip:
   - skorch
 curriculum:
   1a:
-    - Installation and setup
     - Quick course overview
     - Introductions
     - Deep learning vs shallow learning
@@ -17,21 +17,24 @@ curriculum:
     - Check out and feedback
   2a:
     - Check in and review
-    - Image_classification_with_PyTorch.ipynb  # Done, to check.
-    - Requests_from_geofignet_API.ipynb  # Done, to check.
+    - Intro_to_neural_networks.ipynb  # Continued.
   2b:
-    - Reproducing_Roeth_and_Tarantola_1994.ipynb  # Done, to check.
+    - Image_classification_with_skorch.ipynb  # Done.
+    - Requests_from_geofignet_API.ipynb  # Done.
     - Check out and feedback
 extras:
   - All_the_activation_functions.ipynb
+  - Image_classification.ipynb
+  - Image_classification_with_PyTorch.ipynb
   - Intro_to_NumPy_for_ML.ipynb
   - Neural_networks_from_scratch.ipynb
   - Pandas_for_ML_data_management.ipynb
   - Pandas_for_timeseries.ipynb
   - Read_and_write_LAS.ipynb
   - Read_SEG-Y_with_segyio.ipynb
+  - Reproducing_Roeth_and_Tarantola_1994.ipynb  # If we have time.
   - Transfer_learning_RESNET_inference_only.ipynb
-  - Transfer_learning_RESNET_with_PyTorch_on_Colab.ipynb
+  - Transfer_learning_RESNET_with_PyTorch_on_Colab.ipynb  # If time.
   - What_is_gradient_descent.ipynb  # Could add PyTorch.optim version of example.
 scripts:
   - mlutils.py  # Copied to all notebook directories.
