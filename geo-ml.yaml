@@ -1,0 +1,43 @@
+# 2-half-days shallow learning intro class for geos.
+title: Intro to Machine Learning for Subsurface
+environment: geoml
+conda:
+  - umap-learn
+  - hdbscan
+  - verde
+curriculum:
+  1a:
+    - Quick course overview
+    - Introductions
+    - What is machine learning?
+    - Pandas_for_ML_data_management.ipynb
+  1b:
+    - A quick introduction to supervised classification  # Conceptual only.
+    - Multiclass_classification.ipynb
+    - Check out and feedback
+  2a:
+    - Check in and review
+    - Multiclass_classification.ipynb
+  2b:
+    - Making_maps_with_machine_learning.ipynb
+    - Check out and feedback
+extras:
+  - Binary_classification.ipynb
+  - Image_classification.ipynb
+  - Intro_to_classification.ipynb
+  - Intro_to_NumPy_for_ML.ipynb
+  - Intro_to_regression.ipynb
+  - Latent_semantic_analysis.ipynb
+  - Loading_messy_data.ipynb
+  - Mis-steps_in_machine_learning.ipynb
+  - Pandas_for_timeseries.ipynb
+  - Quick_intro_to_Dask.ipynb
+  - Read_and_write_LAS.ipynb
+  - Read_SEG-Y_with_segyio.ipynb
+  - Regression_with_Scikit-Learn.ipynb
+scripts:
+  - mlutils.py  # Copied to all notebook directories.
+references:
+  - Dramsch_2020.pdf
+  - Karpatne_etal_2017.pdf
+  - ML_project_review_checklist.pdf
