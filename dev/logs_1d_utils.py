@@ -6,15 +6,15 @@ from welly import Well
 
 
 def get_GR(w, dropna=False):
-    """Convenience function to return GR as list from a well.
+    """
+    Convenience function to return GR as list from a well.
 
-    Parameters
-    ----------
-        w, (welly.Well): a well object to retrieve a GR from
-        dropna, (bool):  whether to drop nan values
-    Returns
-    -------
-        gr, (list): curve values in a `list` object.
+    Args:
+        w (welly.Well): a well object to retrieve a GR from.
+        dropna (bool):  whether to drop nan values. Default: False
+    
+    Returns:
+        list: curve values.
     """
     # Read the curve data and save them as a list
     gr = list(w.data['GR'].values)
@@ -34,18 +34,17 @@ def get_GR(w, dropna=False):
 
 
 def get_GR_np(w, dropna=False):
-    """Convenience function to return GR as list from a well.
+    """
+    Convenience function to return GR as list from a well.
 
-    Parameters
-    ----------
-        w, (welly.Well): a well object to retrieve a GR from
-        dropna, (bool):  whether to drop nan values
-    Returns
-    -------
-        gr, (list): curve values in a `list` object.
+    Args:
+        w (welly.Well): a well object to retrieve a GR from.
+        dropna (bool):  whether to drop nan values. Default: False
 
-    Note
-    ----
+    Returns:
+        list: curve values.
+
+    Note:
         requires numpy
     """
     gr = w.data['GR'].values
