@@ -31,23 +31,3 @@ def get_GR(w, dropna=False):
     # Flow control: do not clean nan values
     else:
         return gr
-
-
-def get_GR_np(w, dropna=False):
-    """
-    Convenience function to return GR as list from a well.
-
-    Args:
-        w (welly.Well): a well object to retrieve a GR from.
-        dropna (bool):  whether to drop nan values. Default: False
-
-    Returns:
-        list: curve values.
-
-    Note:
-        requires numpy
-    """
-    gr = w.data['GR'].values
-    if dropna:
-        gr = gr[~np.isnan(gr)]
-    return gr
