@@ -35,6 +35,7 @@ extras:
   - Read_and_write_LAS.ipynb
   - Read_SEG-Y_with_segyio.ipynb
   - Regression_with_Scikit-Learn.ipynb
+  - Unsupervised_clustering_on_rock_properties.ipynb
 scripts:
   - mlutils.py  # Copied to all notebook directories.
 references:

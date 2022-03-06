@@ -2,7 +2,7 @@
 title: Intro to Deep Learning for Subsurface
 environment: geoml
 conda:
-  - fastchan::fastai
+  - fastchan::fastai  # Installs PyTorch
 pip:
   - skorch
 curriculum:
