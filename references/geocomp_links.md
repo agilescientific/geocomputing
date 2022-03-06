@@ -78,7 +78,7 @@ You can also use the following, if you have an `environment.yml` file:
 
 ## More tutorials!
 
-- Agile’s X Lines of Python — https://github.com/agile-geoscience/xlines/tree/master/notebooks
+- Agile’s X Lines of Python — https://github.com/agilescientific/xlines/tree/master/notebooks
 - The SEG Geophysical Tutorials, almost all of them have Jupyter Notebooks with them, many of which are appropriate for beginners — https://wiki.seg.org/wiki/Geophysical_tutorials
 - Here’s a playlist of tutorials from this year's Transform conference, all of them have notebooks etc. — https://www.youtube.com/playlist?list=PLgLft9vxdduCESA3xAo5Ts_ziO8vZAFG1
 - Some tutorials from Jesse Pisel at UT Austin — https://github.com/jessepisel/5minutesofpython
