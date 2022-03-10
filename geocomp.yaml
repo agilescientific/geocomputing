@@ -26,12 +26,12 @@ curriculum:
     - Check out and feedback
   3:
     - Check in and review
-    - Intro_to_Functions.ipynb
+    - Intro_to_functions.ipynb
     - Intro_to_IO.ipynb
     - Check out and feedback
   4:
     - Check in and review
-    - goal_plot.ipynb
+    - The_big_plot.ipynb
     - Check out and feedback
 extras:  # These will be listed in the Curriculum.
   - Advanced_functions.ipynb
