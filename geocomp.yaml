@@ -14,16 +14,15 @@ curriculum:
   1:
     - Installation and setup
     - Quick course overview
-    - Introductions
     - The Python interpreter and the IPython environment
     - Jupyter Notebooks
-    - Mathematics_and_Strings.ipynb  # .ipynb files will be added to repo.
-    - Logs_1D_data.ipynb
+    - Maths_and_text.ipynb  # .ipynb files will be added to repo.
+    - Logs_and_other_1D_data.ipynb
     - Check out and feedback
   2:
     - Check in and review
     - Multidimensional_data.ipynb
-    - Dictionaries_and_combined_plots.ipynb
+    - Dealing_with_metadata.ipynb
     - Check out and feedback
   3:
     - Check in and review
@@ -46,23 +45,15 @@ extras:  # These will be listed in the Curriculum.
   - Documentation_basics.ipynb
   - Pandas_for_data_management.ipynb
   - Read_and_write_LAS.ipynb
-  - Pandas_for_timeseries.ipynb
   - Read_SEG-Y_with_segyio.ipynb
   - Writing_data_to_files_or_databases.ipynb
 demos:  # These will NOT be listed in the Curriculum.
   - Birthquake.ipynb
-  - HDF5_for_data_management.ipynb
-  - Quick_visualization_demos.ipynb
   - Volumetrics_and_units.ipynb
   - Custom_colormaps_in_matplotlib.ipynb
   - Interactive_widgets_in_Jupyter.ipynb
   - Regular_expressions_for_text_processing.ipynb
-  - Forward_models.ipynb
-  - Loading_a_DEM.ipynb
-  - GeoPandas_for_spatial_data.ipynb
   - Pint_for_physical_units.ipynb
-  - SegySAK_for_SEG-Y.ipynb
   - Get_info_from_web.ipynb
   - Practice_loops.ipynb
   - Ternary_diagrams.ipynb
-  - Xarray_for_indexed_arrays.ipynb
