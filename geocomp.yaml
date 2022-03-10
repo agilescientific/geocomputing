@@ -3,10 +3,11 @@ data:
   - sussex.zip  # Will be unzipped.
   - B-41_tops.txt
   - L-30_tops.txt
-  - GDR_clmag_part.XYZ
   - st-helens_before.txt
   - st-helens_after.txt
   - well_data.txt
+  - F3_horizon.txt
+  - F3_8-bit_int.sgy # this is a 3D seismic survey from F3.
 references:
   - geocomp_links.md
 curriculum:
@@ -16,25 +17,22 @@ curriculum:
     - Introductions
     - The Python interpreter and the IPython environment
     - Jupyter Notebooks
-    - Intro_to_Python.ipynb  # .ipynb files will be added to repo.
+    - Mathematics_and_Strings.ipynb  # .ipynb files will be added to repo.
+    - Logs_1D_data.ipynb
     - Check out and feedback
   2:
     - Check in and review
-    - Intro_to_Python.ipynb
+    - Multidimensional_data.ipynb
+    - Dictionaries_and_combined_plots.ipynb
     - Check out and feedback
   3:
     - Check in and review
-    - Intro_to_functions.ipynb
-    - Practice_functions.ipynb
+    - Intro_to_Functions.ipynb
+    - Intro_to_IO.ipynb
     - Check out and feedback
   4:
     - Check in and review
-    - Intro_to_matplotlib.ipynb
-    - Check out and feedback
-  5:
-    - Check in and review
-    - Intro_to_reading_text_files.ipynb
-    - Practice_reading_text_files.ipynb
+    - goal_plot.ipynb
     - Check out and feedback
 extras:  # These will be listed in the Curriculum.
   - Advanced_functions.ipynb
