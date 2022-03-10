@@ -17,7 +17,7 @@ curriculum:
     - Introductions
     - The Python interpreter and the IPython environment
     - Jupyter Notebooks
-    - Mathematics_and_strings.ipynb  # .ipynb files will be added to repo.
+    - Mathematics_and_Strings.ipynb  # .ipynb files will be added to repo.
     - Logs_1D_data.ipynb
     - Check out and feedback
   2:
