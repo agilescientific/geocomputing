@@ -5,14 +5,15 @@ channels:
 dependencies:
   - python=3.9
   - pip
-  - numpy>=1.19
-  - scipy>=1.7
+  - numpy>=1.20
+  - scipy>=1.8
   - matplotlib>=3.5
   - jupyter
   - jupyterlab
   - ipykernel
   - ipywidgets
   - pandas>=1.4
+  - openpyxl>=3.0
   - geopandas
   - scikit-learn>=1.0
   - pillow>=8.1
@@ -24,8 +25,8 @@ dependencies:
   - requests
   - tqdm
   - pip:
-    - bruges>=0.4
-    - welly>=0.4
+    - bruges>=0.5
+    - welly>=0.5
     - wellpathpy
     - segyio
     - dlisio
