@@ -18,6 +18,5 @@ s3-path: data
 # What --all means.
 all:
   - geocomp
-  - geocomp-ml
-  - geocomp-gp
-  - geocomp-gg
+  - geo-ml
+  - peteng-ml
