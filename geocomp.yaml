@@ -1,11 +1,5 @@
 title: Introduction to Geocomputing
 data:
-  - sussex.zip  # Will be unzipped.
-  - B-41_tops.txt
-  - L-30_tops.txt
-  - st-helens_before.txt
-  - st-helens_after.txt
-  - well_data.txt
   - F3_horizon.txt
   - F3_8-bit_int.sgy # this is a 3D seismic survey from F3.
 references:
