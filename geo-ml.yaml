@@ -13,11 +13,11 @@ curriculum:
     - Pandas_for_ML_data_management.ipynb
   1b:
     - A quick introduction to supervised classification  # Conceptual only.
-    - Multiclass_classification.ipynb
+    - Multiclass_classification_short.ipynb
     - Check out and feedback
   2a:
     - Check in and review
-    - Multiclass_classification.ipynb
+    - Multiclass_classification_short.ipynb
   2b:
     - Making_maps_with_machine_learning.ipynb
     - Check out and feedback
