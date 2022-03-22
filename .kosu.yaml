@@ -20,3 +20,4 @@ all:
   - geocomp
   - geo-ml
   - peteng-ml
+  - geocomp-dl
