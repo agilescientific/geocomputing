@@ -7,7 +7,7 @@ conda:
   - verde
   - fastchan::fastai
 pip:
-  - scikit-som
+  - sklearn-som
 scripts:
   - mlutils.py  # Copied to all notebook directories.
 references:

@@ -1,5 +1,11 @@
 title: Introduction to Geocomputing
+conda:
+  - pooch
+pip:
+  - gio
 data:
+  - st-helens_before.txt # Used in the console
+  - st-helens_after.txt  # Used in the console
   - F3_horizon.txt
   - F3_8-bit_int.sgy # this is a 3D seismic survey from F3.
 references:
