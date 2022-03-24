@@ -20,7 +20,7 @@ dependencies:
   - h5py
   - seaborn>=0.11
   - pint
-  - cartopy>=0.20
+  - cartopy
   - xarray>=0.20
   - requests
   - tqdm
