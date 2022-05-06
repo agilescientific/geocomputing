@@ -1,6 +1,7 @@
 title: Exploratory data analysis
 pip:
   - chardet
+  - missingno
 references:
   - geocomp_links.md
 curriculum:
@@ -11,16 +12,15 @@ curriculum:
     - Ingesting data with pandas and other tools. Using SQL.
     - Data visualization and summary statistics.
     - Cleaning data: missing values, interpolation, encoding.
+    - Pandas_for_data_management.ipynb
+    - Regular_expressions_for_text_processing.ipynb
+    - Character_encoding.ipynb
     - Check out and feedback
   2:
     - Check in and review
     - Feature engineering for machine learning.
     - Dealing with spatial data: filtering and declustering.
     - Dealing with time series, images, and text.
+    - Pandas_for_ML_data_management.ipynb
+    - Pandas_for_timeseries.ipynb
     - Check out and feedback
-extras: # These will be listed in the Curriculum.
-  - Pandas_for_data_management.ipynb
-  - Pandas_for_ML_data_management.ipynb
-  - Pandas_for_timeseries.ipynb
-  - Regular_expressions_for_text_processing.ipynb
-  - Character_encoding.ipynb
