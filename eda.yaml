@@ -13,7 +13,6 @@ curriculum:
     - Data visualization and summary statistics.
     - Cleaning data: missing values, interpolation, encoding.
     - Pandas_for_ML_data_management.ipynb
-    - Character_encoding.ipynb
     - Check out and feedback
   2:
     - Check in and review
@@ -24,3 +23,4 @@ curriculum:
     - Check out and feedback
 extras:   # These will NOT be listed in the Curriculum
   - Regular_expressions_intro.ipynb
+  - Character_encoding.ipynb
