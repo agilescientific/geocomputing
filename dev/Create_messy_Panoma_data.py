@@ -1,5 +1,4 @@
 import pandas as pd
-import seaborn as sns
 import numpy as np
 
 rng = np.random.default_rng(87)
@@ -68,13 +67,16 @@ wells_ft = ['SHANKLE', 'NEWBY', 'STUART']
 de.loc[de['Well Name'].isin(wells_ft), 'Depth'] = de[de['Well Name'].isin(wells_ft)]['Depth'] * 0.3048
 
 # Make some depths negative.
-de.loc[de['Well Name'] == 'NEWBY', 'Depth'] = (de[de['Well Name'] == 'NEWBY']['Depth'] * -1)
+de.loc[de['Well Name'] == 'NEWBY', 'Depth'] = de[de['Well Name'] == 'NEWBY']['Depth'] * -1
+
+# Make some porosities fractional.
+de.loc[de['Well Name'] == 'STUART', 'PHIND'] = de[de['Well Name'] == 'STUART']['PHIND'] / 100
 
 # Change SH and LM in some logs to Shale and Limestone.
-wells_ft = 'STUART CRAWFORD'.split()
+wells_ft = ['STUART', 'CRAWFORD']
 for well in wells_ft:
-    de.loc[de['Well Name'] == well, 'Formation'] = de.loc[de['Well Name'] == well, 'Formation'].str.replace('SH', 'shale', regex=False)
-    de.loc[de['Well Name'] == well, 'Formation'] = de.loc[de['Well Name'] == well, 'Formation'].str.replace('LM', 'limestone', regex=False)
+    de.loc[de['Well Name'] == well, 'Formation'] = de.loc[de['Well Name'] == well, 'Formation'].str.replace('SH', 'Shale', regex=False)
+    de.loc[de['Well Name'] == well, 'Formation'] = de.loc[de['Well Name'] == well, 'Formation'].str.replace('LM', 'Limestone', regex=False)
 
 # Convert the numbers for the Facies into text descriptions.
 # Could be more evil and have a typo in a couple descriptions in some wells?
