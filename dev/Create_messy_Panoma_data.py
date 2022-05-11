@@ -62,9 +62,9 @@ cond = (de['Well Name'] == 'CROSS H CATTLE') & de['Formation'].str.startswith('A
 de.loc[cond, 'Well Name'] = 'CROSS H. CATTLE'
 
 # Mess with depths.
-# Change some depths to metres.
-wells_ft = ['SHANKLE', 'NEWBY', 'STUART']
-de.loc[de['Well Name'].isin(wells_ft), 'Depth'] = de[de['Well Name'].isin(wells_ft)]['Depth'] * 0.3048
+# Change some depths to feet.
+wells_ft = ['SHANKLE', 'NEWBY']
+de.loc[de['Well Name'].isin(wells_ft), 'Depth'] = de[de['Well Name'].isin(wells_ft)]['Depth'] / 0.3048
 
 # Make some depths negative.
 de.loc[de['Well Name'] == 'NEWBY', 'Depth'] = de[de['Well Name'] == 'NEWBY']['Depth'] * -1
