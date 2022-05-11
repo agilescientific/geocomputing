@@ -98,5 +98,5 @@ de['Index'] = np.arange(len(de)) + 63  # Then have index=False when saving.
 de['Source'] = 'KGS'
 
 # Save out to csv.
-features = ['Index', 'Well Name', 'Depth', 'Formation', 'RelPos', 'Marine', 'GR', 'ILD', 'DeltaPHI', 'PHIND', 'Facies', 'Completion Date', 'Source']
+features = ['Index', 'Well Name', 'Depth', 'Formation', 'RelPos', 'Marine', 'GR', 'ILD', 'DeltaPHI', 'PHIND', 'PE', 'Facies', 'Completion Date', 'Source']
 de[features].to_csv('../data/Panoma_Field_Permian_RAW.csv', index=False, float_format='%.4f')
