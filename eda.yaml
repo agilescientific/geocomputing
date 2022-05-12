@@ -8,19 +8,24 @@ curriculum:
   1:
     - Installation and setup
     - Quick course overview
+    - Cleaning_data_with_pandas.ipynb
     - Recognizing reliable data sources; 'tidy' data. Databases
     - Ingesting data with pandas and other tools. Using SQL.
     - Data visualization and summary statistics.
     - Cleaning data: missing values, interpolation, encoding.
-    - Pandas_for_ML_data_management.ipynb
     - Check out and feedback
   2:
     - Check in and review
+    - Pandas_for_ML_data_management.ipynb
     - Feature engineering for machine learning.
     - Dealing with spatial data: filtering and declustering.
     - Dealing with time series, images, and text.
     - Pandas_for_timeseries.ipynb
     - Check out and feedback
+    
 extras:   # These will NOT be listed in the Curriculum
-  - Regular_expressions_intro.ipynb
-  - Character_encoding.ipynb
+    - Intro_to_pandas.ipynb
+    - Regular_expressions_intro.ipynb
+    - Character_encoding.ipynb
+    - GeoPandas_for_spatial_data
+    - Read_and_process_images.ipynb
