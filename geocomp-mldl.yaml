@@ -38,6 +38,7 @@ curriculum:
     - Image_classification_with_PyTorch.ipynb
     - Check out and feedback
 extras:
+  - Intro_to_pandas.ipynb
   - All_the_activation_functions.ipynb
   - Binary_classification.ipynb
   - What_is_gradient_descent.ipynb
