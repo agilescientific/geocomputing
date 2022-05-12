@@ -12,15 +12,15 @@ curriculum:
     - Recognizing reliable data sources; 'tidy' data. Databases
     - Ingesting data with pandas and other tools. Using SQL.
     - Data visualization and summary statistics.
-    - Cleaning data: missing values, interpolation, encoding.
+    - Handling missing values, interpolation, encoding.
     - Check out and feedback
   2:
     - Check in and review
     - Pandas_for_ML_data_management.ipynb
     - Feature engineering for machine learning.
-    - Dealing with spatial data: filtering and declustering.
-    - Dealing with time series, images, and text.
     - Pandas_for_timeseries.ipynb
+    - Dealing with time series
+    - Dealing with spatial data, images, and text.
     - Check out and feedback
     
 extras:   # These will NOT be listed in the Curriculum
