@@ -18,6 +18,8 @@ s3-path: data
 # What --all means.
 all:
   - geocomp
+  - eda
+  - model-zoo
   - geo-ml
   - peteng-ml
   - geocomp-dl

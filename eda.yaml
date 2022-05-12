@@ -27,5 +27,5 @@ extras:   # These will NOT be listed in the Curriculum
     - Intro_to_pandas.ipynb
     - Regular_expressions_intro.ipynb
     - Character_encoding.ipynb
-    - GeoPandas_for_spatial_data
+    - GeoPandas_for_spatial_data.ipynb
     - Read_and_process_images.ipynb
