@@ -1,0 +1,32 @@
+# 2-half-days exploring machine learning algorithms.
+title: Machine Learning Algorithms
+environment: geoml
+curriculum:
+  1a:
+    - Quick course overview
+    - Introductions
+    - What is machine learning?
+    - Linear_regression.ipynb
+  1b:
+    - Classification_algorithms.ipynb  # Start with logistic regression.
+    - Choosing algorithms  # Conceptual: evaluating performance, model tuning.
+    - Check out and feedback
+  2a:
+    - Check in and review
+    - Linear_regression_algorithms.ipynb  # KNN, SVR, Trees and forests.
+  2b:
+    - Unsupervised_learning_algorithms.ipynb  # Very quick treatment: PCA, KMeans, DBSCAN, manifolds.
+    - Neural networks and beyond  # Qualitative, depends on time.
+    - Check out and feedback
+extras:
+  - Binary_classification.ipynb
+  - Intro_to_classification.ipynb
+  - Intro_to_NumPy_for_ML.ipynb
+  - Intro_to_regression.ipynb
+  - Loading_messy_data.ipynb
+#  - Neural_networks_and_reinforcement_learning.ipynb  # Very speculative!
+  - Read_and_write_LAS.ipynb
+  - Read_SEG-Y_with_segyio.ipynb
+  - What_is_gradient_descent.ipynb
+references:
+  - Dramsch_2020.pdf
