@@ -8,6 +8,7 @@ curriculum:
   1:
     - Installation and setup
     - Quick course overview
+    - Intro_to_pandas.ipynb
     - Cleaning_data_with_pandas.ipynb
     - Recognizing reliable data sources; 'tidy' data. Databases
     - Ingesting data with pandas and other tools. Using SQL.
@@ -24,7 +25,6 @@ curriculum:
     - Check out and feedback
     
 extras:   # These will NOT be listed in the Curriculum
-    - Intro_to_pandas.ipynb
     - Regular_expressions_intro.ipynb
     - Character_encoding.ipynb
     - GeoPandas_for_spatial_data.ipynb
