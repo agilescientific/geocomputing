@@ -8,14 +8,14 @@ curriculum:
     - What is machine learning?
     - Linear_regression.ipynb
   1b:
-    - Classification_algorithms.ipynb  # Start with logistic regression.
+    # - Classification_algorithms.ipynb  # Start with logistic regression.
     - Choosing algorithms  # Conceptual: evaluating performance, model tuning.
     - Check out and feedback
   2a:
     - Check in and review
     - Linear_regression_algorithms.ipynb  # KNN, SVR, Trees and forests.
   2b:
-    - Unsupervised_learning_algorithms.ipynb  # Very quick treatment: PCA, KMeans, DBSCAN, manifolds.
+    # - Unsupervised_learning_algorithms.ipynb  # Very quick treatment: PCA, KMeans, DBSCAN, manifolds.
     - Neural networks and beyond  # Qualitative, depends on time.
     - Check out and feedback
 extras:
