@@ -653,6 +653,127 @@ def plot_ribbons(*arrs, s=None, legend=None, cmap=None, classes=None, titles=Non
     return None
 
 
+def logistic_progression(model, X_val, y_val, y_test, cutoff):
+    """
+    
+    """
+    prob_shale = model.predict_proba(X_val)[:,1]
+    predicted = [1 if i > cutoff else 0 for i in prob_shale]  #Setting a cutoff
+
+    data = [[X_val, y_val=='shale', y_val=='shale'],
+            [X_val, y_test, y_val=='shale'],
+            [X_val, y_test, model.predict_proba(X_val)[:,1]], 
+            [X_val, y_test, predicted]]
+
+    mi, ma = np.amin(X_val) * 0.9, np.amax(X_val) * 1.1
+    ymi, yma = -0.05, 1.05 
+    titles = ['Data', 'Logistic Regression', 'Probabilty of shale', 'Classification']
+    cmap = plt.get_cmap('viridis')
+    fig, axs = plt.subplots(1, 4, figsize=(16, 4))
+    cax = fig.add_axes([0.665, 0.55, 0.005, 0.3])
+    for d, ax, t in zip(data, axs, titles):
+        im = ax.scatter(d[0], d[1], c=d[2], ec='grey', s=50, alpha=0.5)
+        left, bottom, width, height = (mi, cutoff, ma-mi, yma - cutoff )
+        rect_top = plt.Rectangle((left, bottom), width, height, alpha=0.1, facecolor=cmap(1.0))
+        rect_bot = plt.Rectangle((left, ymi), width, cutoff-ymi, alpha=0.1, facecolor=cmap(0.0))
+        ax.add_patch(rect_top)
+        ax.add_patch(rect_bot)
+        ax.set_xlim(mi, ma)
+        ax.set_ylim(ymi, yma)
+        ax.set_title(t)
+        ax.text(np.amin(X_val), cutoff, s=f'cutoff: {cutoff}', va='bottom', ha='left')
+        ax.set_xlabel('Vp [m/s]')
+        ax.axhline(cutoff, c='grey')
+        
+    fig.colorbar(im, cax=cax, orientation='vertical')
+    return
+
+
+def lithology_tree(clf, features, figsize=(15, 8)):
+    """"Plots a decision tree using a lithologic-friendly set of colors
+    defined by the colordict dictionary"""
+    color_dict = {'dolomite': 'blueviolet', 
+                  'limestone': 'cornflowerblue',
+                  'sandstone': 'goldenrod',
+                  'shale': 'darkseagreen'}
+
+    fig, ax = plt.subplots(figsize=figsize)
+    artists = tree.plot_tree(clf, feature_names=features, class_names=clf.classes_,
+                             filled=True, rounded=True, ax=ax)
+    
+    colors = list(colordict.values())
+
+    for artist, impurity, value in zip(artists, clf.tree_.impurity, clf.tree_.value):
+        # let the max value decide the color; whiten the color depending on impurity (gini)
+        
+        r, g, b = to_rgb(colors[np.argmax(value)])
+        f = impurity  # for N colors: f = impurity * N/(N-1) if N>1 else 0
+        facecolor = (f + (1-f)*r, f + (1-f)*g, f + (1-f)*b)
+        artist.get_bbox_patch().set_facecolor(facecolor)
+        artist.get_bbox_patch().set_edgecolor('black')
+
+    return
+
+
+def show_decision_regions(clf, X_train, y_train, X_val, y_val, palette='none', hue_order='none'):
+    
+    lithologies = {'sandstone': 1, 'shale': 2, 'limestone': 3, 'dolomite': 4}
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_val)
+
+    fig, ax = plt.subplots(figsize=(10,10))
+    plt.title(str(clf).split('(')[0], fontsize=14)
+    # training data
+    if False:
+        _ = sns.scatterplot(x=X_train[:,0], y=X_train[:,1], hue=y_train, s=200, ec='none', alpha=0.25, 
+                            palette=palette, hue_order=hue_order, 
+                            ax=ax, legend=False)
+    # Plot the validation data
+    scatter = sns.scatterplot(x=X_val[:,0], y=X_val[:,1], hue=y_val, s=200, ec='k', alpha=0.5, 
+                          palette=palette, hue_order=hue_order, ax=ax)
+
+    # Plot the predicted classes
+    ax = plt.gca()
+    _ = sns.scatterplot(x=X_val[:,0], y=X_val[:,1], hue=y_pred, s=50, ec='k', alpha=0.75, 
+                    palette=palette, hue_order=hue_order, 
+                    ax=ax, legend=False)
+    
+    # Plot the decision boundary.
+    h = .02  # step size in the mesh
+    x_min, x_max = X_train[:, 0].min() - .5, X_train[:, 0].max() + .5
+    y_min, y_max = X_train[:, 1].min() - .5, X_train[:, 1].max() + .5
+
+    xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+    Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
+    Z = np.asarray([lithologies[d] for d in Z])
+    # Put the result into a color plot
+    Z = Z.reshape(xx.shape)
+    im = ax.pcolormesh(xx, yy, Z, alpha=0.2, zorder=1, 
+                       cmap=ListedColormap(colors=['goldenrod', 'darkseagreen', 'cornflowerblue', 'blueviolet']))
+    print(f'Accuracy: {accuracy_score(y_val, y_pred):.3f}')
+    return
+
+
+def val_vs_pred_scatter(X_val, y_val, y_pred, palette='none', hue_order='none'):
+    """
+    Plot validation points X_val, y_val in comparison to y_pred.
+    Validation points are the large dots. Predictions are the small dots.
+    Works only with the Classification_algorithms notebook 
+    """
+    fig, ax = plt.subplots(figsize=(8,8))
+
+    # Plot the validation data
+    scatter = sns.scatterplot(x=X_val[:,0], y=X_val[:,1], hue=y_val, s=200, ec='k', alpha=0.5, 
+                              palette=palette, hue_order=hue_order, ax=ax)
+
+    # Plot the predicted classes
+    ax = plt.gca()
+    _ = sns.scatterplot(x=X_val[:,0], y=X_val[:,1], hue=y_pred, s=50, ec='k', alpha=0.75, 
+                        palette=palette, hue_order=hue_order, 
+                        ax=ax, legend=False)
+    return
+
+
 if __name__ == '__main__':
     import doctest
     doctest.testmod(verbose=True)
