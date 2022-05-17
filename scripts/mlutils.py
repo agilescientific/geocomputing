@@ -18,7 +18,6 @@ from matplotlib.colors import LinearSegmentedColormap, ListedColormap, to_rgb
 import seaborn as sns
 from scipy.spatial.distance import cdist
 from scipy.stats import mode
-
 from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
