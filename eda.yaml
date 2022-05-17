@@ -17,7 +17,7 @@ curriculum:
     - Check out and feedback
   2:
     - Check in and review
-    - Pandas_for_ML_data_management.ipynb
+    - Feature_engineering_with_pandas.ipynb
     - Feature engineering for machine learning.
     - Pandas_for_timeseries.ipynb
     - Dealing with time series

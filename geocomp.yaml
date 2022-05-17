@@ -43,7 +43,7 @@ extras:  # These will be listed in the Curriculum.
   - Read_and_process_images.ipynb
   - Write_SEG-Y_with_segyio.ipynb
   - Documentation_basics.ipynb
-  - Pandas_for_data_management.ipynb
+  - Feature_engineering_with_pandas.ipynb
   - Read_and_write_LAS.ipynb
   - Read_SEG-Y_with_segyio.ipynb
   - Writing_data_to_files_or_databases.ipynb

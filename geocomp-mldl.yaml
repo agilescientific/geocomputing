@@ -22,7 +22,7 @@ curriculum:
     - Quick course overview
     - What is machine learning?
     - Intro_to_regression.ipynb
-    - Pandas_for_ML_data_management.ipynb
+    - Feature_engineering_with_pandas.ipynb
     - Check out and feedback
   2:
     - Check in and review
