@@ -16,10 +16,11 @@ from matplotlib.cm import get_cmap
 import matplotlib.ticker as plticker
 from matplotlib.colors import LinearSegmentedColormap
 from matplotlib.colors import ListedColormap
+import seaborn as sns
 from scipy.spatial.distance import cdist
 from scipy.stats import mode
 
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import make_moons, make_circles, make_classification
@@ -30,7 +31,7 @@ from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-
+from sklearn import tree
 
 def gen_knn_data(size=(20, 20)):
     """
