@@ -1,6 +1,8 @@
 # 2-half-days exploring machine learning algorithms.
 title: Machine Learning Algorithms
 environment: geoml
+scripts:
+  - mlutils.py  # Copied to all notebook directories.
 curriculum:
   1a:
     - Quick course overview
