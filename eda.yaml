@@ -1,4 +1,5 @@
 title: Exploratory data analysis
+environment: geoml
 pip:
   - chardet
   - missingno
@@ -23,8 +24,7 @@ curriculum:
     - Dealing with time series
     - Dealing with spatial data, images, and text.
     - Check out and feedback
-    
-extras:   # These will NOT be listed in the Curriculum
+extras:
     - Regular_expressions_intro.ipynb
     - Character_encoding.ipynb
     - GeoPandas_for_spatial_data.ipynb

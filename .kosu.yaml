@@ -19,6 +19,4 @@ s3-path: data
 all:
   - geocomp
   - eda
-  - geo-ml
-  - peteng-ml
-  - geocomp-dl
+  - model-zoo

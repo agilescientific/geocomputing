@@ -26,7 +26,6 @@ extras:
   - Intro_to_NumPy_for_ML.ipynb
   - Intro_to_regression.ipynb
   - Loading_messy_data.ipynb
-#  - Neural_networks_and_reinforcement_learning.ipynb  # Very speculative!
   - Nonlinear_regression_with_Gardner_equation.ipynb
   - Read_and_write_LAS.ipynb
   - Read_SEG-Y_with_segyio.ipynb
