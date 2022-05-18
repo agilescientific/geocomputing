@@ -10,7 +10,7 @@ curriculum:
     - Quick course overview
     - Introductions
     - What is machine learning?
-    - Pandas_for_ML_data_management.ipynb
+    - Feature_engineering_with_pandas.ipynb
   1b:
     - A quick introduction to supervised classification  # Conceptual only.
     - Multiclass_classification_short.ipynb

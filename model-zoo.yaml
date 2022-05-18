@@ -1,6 +1,8 @@
 # 2-half-days exploring machine learning algorithms.
 title: Machine Learning Algorithms
 environment: geoml
+scripts:
+  - mlutils.py  # Copied to all notebook directories.
 curriculum:
   1a:
     - Quick course overview
@@ -8,7 +10,7 @@ curriculum:
     - What is machine learning?
     - Linear_regression.ipynb
   1b:
-    # - Classification_algorithms.ipynb  # Start with logistic regression.
+    - Classification_algorithms.ipynb
     - Choosing algorithms  # Conceptual: evaluating performance, model tuning.
     - Check out and feedback
   2a:

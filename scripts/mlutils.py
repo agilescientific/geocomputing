@@ -14,12 +14,11 @@ from PIL import Image
 import matplotlib.pyplot as plt
 from matplotlib.cm import get_cmap
 import matplotlib.ticker as plticker
-from matplotlib.colors import LinearSegmentedColormap
-from matplotlib.colors import ListedColormap
+from matplotlib.colors import LinearSegmentedColormap, ListedColormap, to_rgb
+import seaborn as sns
 from scipy.spatial.distance import cdist
 from scipy.stats import mode
-
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.datasets import make_moons, make_circles, make_classification
@@ -30,7 +29,7 @@ from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
-
+from sklearn import tree
 
 def gen_knn_data(size=(20, 20)):
     """
@@ -655,7 +654,7 @@ def plot_ribbons(*arrs, s=None, legend=None, cmap=None, classes=None, titles=Non
 
 def logistic_progression(model, X_val, y_val, y_test, cutoff):
     """
-    
+    Docstring
     """
     prob_shale = model.predict_proba(X_val)[:,1]
     predicted = [1 if i > cutoff else 0 for i in prob_shale]  #Setting a cutoff
@@ -692,7 +691,8 @@ def logistic_progression(model, X_val, y_val, y_test, cutoff):
 def lithology_tree(clf, features, figsize=(15, 8)):
     """"Plots a decision tree using a lithologic-friendly set of colors
     defined by the colordict dictionary"""
-    color_dict = {'dolomite': 'blueviolet', 
+    
+    colordict = {'dolomite': 'blueviolet', 
                   'limestone': 'cornflowerblue',
                   'sandstone': 'goldenrod',
                   'shale': 'darkseagreen'}
