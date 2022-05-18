@@ -8,7 +8,7 @@ curriculum:
     - What is machine learning?
     - Linear_regression.ipynb
   1b:
-    # - Classification_algorithms.ipynb  # Start with logistic regression.
+    - Classification_algorithms.ipynb
     - Choosing algorithms  # Conceptual: evaluating performance, model tuning.
     - Check out and feedback
   2a:
