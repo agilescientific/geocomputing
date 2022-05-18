@@ -15,7 +15,7 @@ curriculum:
     - Check in and review
     - Linear_regression_algorithms.ipynb  # KNN, SVR, Trees and forests.
   2b:
-    # - Unsupervised_learning_algorithms.ipynb  # Very quick treatment: PCA, KMeans, DBSCAN, manifolds.
+    - Unsupervised_learning_algorithms.ipynb  # Very quick treatment: PCA, KMeans, DBSCAN, manifolds.
     - Neural networks and beyond  # Qualitative, depends on time.
     - Check out and feedback
 extras:
@@ -25,6 +25,7 @@ extras:
   - Intro_to_regression.ipynb
   - Loading_messy_data.ipynb
 #  - Neural_networks_and_reinforcement_learning.ipynb  # Very speculative!
+  - Nonlinear_regression_with_Gardner_equation.ipynb
   - Read_and_write_LAS.ipynb
   - Read_SEG-Y_with_segyio.ipynb
   - What_is_gradient_descent.ipynb
