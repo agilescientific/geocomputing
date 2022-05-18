@@ -37,13 +37,13 @@ extras:  # These will be listed in the Curriculum.
   - Advanced_functions.ipynb
   - Intro_to_NumPy.ipynb
   - Practice_NumPy.ipynb
+  - Intro_to_Pandas.ipynb
   - Seismic_data_basics.ipynb
   - Advanced_matplotlib.ipynb
   - Testing_basics.ipynb
   - Read_and_process_images.ipynb
   - Write_SEG-Y_with_segyio.ipynb
   - Documentation_basics.ipynb
-  - Feature_engineering_with_pandas.ipynb
   - Read_and_write_LAS.ipynb
   - Read_SEG-Y_with_segyio.ipynb
   - Writing_data_to_files_or_databases.ipynb
