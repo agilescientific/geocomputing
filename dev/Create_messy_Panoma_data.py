@@ -91,7 +91,7 @@ lithologies = {
     8: 'Packstone-grainstone',
     9: 'Phylloid-algal bafflestone',
 }
-de['Facies'] = de['Facies'].replace(lithologies)
+#de['Facies'] = de['Facies'].replace(lithologies)
 
 # Add a redundant Index column?
 de['Index'] = np.arange(len(de)) + 63  # Then have index=False when saving.
@@ -100,3 +100,26 @@ de['Source'] = 'KGS'
 # Save out to csv.
 features = ['Index', 'Well Name', 'Depth', 'Formation', 'RelPos', 'Marine', 'GR', 'ILD', 'DeltaPHI', 'PHIND', 'PE', 'Facies', 'Completion Date', 'Source']
 de[features].to_csv('../data/Panoma_Field_Permian_RAW.csv', index=False, float_format='%.4f')
+
+meta_dict = {
+    'Index': ['Index for sorting records', ''],
+    'Well Name': ['Name of the well that the record is from.', ''],
+    'Depth': ['Measured depth below KB', ''],
+    'Formation': ['Which formation the record is from. See accompanying paper.', ''],
+    'RelPos': ['Position of the record relative to a facies interval. 0 at base, normalised to 1 per facies interval.', ''],
+    'Marine': ['Whether a record is of a marine rock (1) or not (0).', ''],
+    'GR': ['Gamma Ray - natural radioactivity.', 'Unit: API units'],
+    'DeltaPHI': ['Difference between the Neutron Porosity Logs and the Density Porosity Log. Measure of porosity.', 'Unit: %'],
+    'ILD': ['Induction Log Deep - Deep formation resistivity.', 'Unit: Ohm.m'],
+    'PHIND': ['Nuclear Density for porosity. Average of DPhi and NPhi.', 'Unit: API units'],
+    'PE': ['Photoelectric factor. Unit: '],
+    'Facies': ['Numerical code for the Facies. Derived from core. See accompanying paper.', ''],
+    'Completion Date': ['Date of completion of drilling.', ''],
+    'Source': ['Original source of the data.', ''],
+}
+metadata = pd.DataFrame.from_dict(meta_dict, orient='index', columns=['Description', 'Units'])
+metadata = metadata.reset_index().rename(columns={'index': 'Column Name'})
+
+with pd.ExcelWriter('../data/Panoma_Field_Permian-RAW.xlsx') as writer:  
+    metadata.to_excel(writer, sheet_name='metadata', index=False)
+    de.to_excel(writer, sheet_name='data', index=False)
