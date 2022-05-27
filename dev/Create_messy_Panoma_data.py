@@ -112,7 +112,7 @@ meta_dict = {
     'DeltaPHI': ['Difference between the Neutron Porosity Logs and the Density Porosity Log. Measure of porosity.', 'Unit: %'],
     'ILD': ['Induction Log Deep - Deep formation resistivity.', 'Unit: Ohm.m'],
     'PHIND': ['Nuclear Density for porosity. Average of DPhi and NPhi.', 'Unit: API units'],
-    'PE': ['Photoelectric factor. Unit: '],
+    'PE': ['Photoelectric factor.', 'Unit: barns/electron'], # What a wild unit! I love it.
     'Facies': ['Numerical code for the Facies. Derived from core. See accompanying paper.', ''],
     'Completion Date': ['Date of completion of drilling.', ''],
     'Source': ['Original source of the data.', ''],
