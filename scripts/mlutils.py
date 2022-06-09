@@ -652,7 +652,7 @@ def plot_ribbons(*arrs, s=None, legend=None, cmap=None, classes=None, titles=Non
     return None
 
 
-def logistic_progression(model, X_val, y_val, y_test, cutoff):
+def logistic_plots(model, X_val, y_val, y_test, cutoff):
     """
     Docstring
     """
@@ -715,29 +715,48 @@ def lithology_tree(clf, features, figsize=(15, 8)):
     return
 
 
-def show_decision_regions(clf, X_train, y_train, X_val, y_val, palette='none', hue_order='none'):
+def show_decision_regions(clf,
+                          X_train, y_train, X_val, y_val,
+                          palette=None, hue_order=None,
+                          plot_train=False, ax=None,
+                          scaler=None,
+                          ):
+    """
+    Plot decision boundaries in a multi-class problem with two features.
     
+    Args:
+        clf: The classifier.
+        X_train (array): The training input.
+        y_train (array): The training labels.
+        X_val (array): The validation data.
+        y_val (array): The validation labels.
+        palette: The Seaborn palette.
+        hue_order: The hue order for Seaborn.
+        plot_train (bool): Whether to plot the training data.
+        ax (Axes): An Axes object. If None, one will be created.
+        scaler (sklearn scaling transformer): The scaler; must have a 
+
+    Returns:
+        Axes.
+    """
     lithologies = {'sandstone': 1, 'shale': 2, 'limestone': 3, 'dolomite': 4}
     clf.fit(X_train, y_train)
     y_pred = clf.predict(X_val)
 
-    fig, ax = plt.subplots(figsize=(10,10))
-    plt.title(str(clf).split('(')[0], fontsize=14)
-    # training data
-    if False:
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(10,10))
+
+    if scaler is not None:
+        X_train = scaler.inverse_transform(X_train)
+        X_val = scaler.inverse_transform(X_val)
+
+    if plot_train:
         _ = sns.scatterplot(x=X_train[:,0], y=X_train[:,1], hue=y_train, s=200, ec='none', alpha=0.25, 
                             palette=palette, hue_order=hue_order, 
                             ax=ax, legend=False)
-    # Plot the validation data
-    scatter = sns.scatterplot(x=X_val[:,0], y=X_val[:,1], hue=y_val, s=200, ec='k', alpha=0.5, 
-                          palette=palette, hue_order=hue_order, ax=ax)
 
-    # Plot the predicted classes
-    ax = plt.gca()
-    _ = sns.scatterplot(x=X_val[:,0], y=X_val[:,1], hue=y_pred, s=50, ec='k', alpha=0.75, 
-                    palette=palette, hue_order=hue_order, 
-                    ax=ax, legend=False)
-    
+    ax = validation_scatter(X_val, y_val, y_pred, palette, hue_order, ax=ax)
+
     # Plot the decision boundary.
     h = .02  # step size in the mesh
     x_min, x_max = X_train[:, 0].min() - .5, X_train[:, 0].max() + .5
@@ -746,32 +765,50 @@ def show_decision_regions(clf, X_train, y_train, X_val, y_val, palette='none', h
     xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
     Z = clf.predict(np.c_[xx.ravel(), yy.ravel()])
     Z = np.asarray([lithologies[d] for d in Z])
-    # Put the result into a color plot
+
+    title = f"{str(clf).split('(')[0]}   Accuracy: {accuracy_score(y_val, y_pred):.3f}"
+    ax.set_title(title, fontsize=14)
+    
+    # Put the result into a color plot.
     Z = Z.reshape(xx.shape)
-    im = ax.pcolormesh(xx, yy, Z, alpha=0.2, zorder=1, 
+    im = ax.pcolormesh(xx, yy, Z, alpha=0.2, zorder=1, shading='auto',
                        cmap=ListedColormap(colors=['goldenrod', 'darkseagreen', 'cornflowerblue', 'blueviolet']))
-    print(f'Accuracy: {accuracy_score(y_val, y_pred):.3f}')
-    return
 
+    return ax
 
-def val_vs_pred_scatter(X_val, y_val, y_pred, palette='none', hue_order='none'):
+def validation_scatter(X_val, y_val, y_pred, palette=None, hue_order=None, ax=None, scaler=None):
     """
     Plot validation points X_val, y_val in comparison to y_pred.
     Validation points are the large dots. Predictions are the small dots.
-    Works only with the Classification_algorithms notebook 
+    Works only with the Classification_algorithms notebook.
+
+    Args:
+        X_val (array): The validation data.
+        y_val (array): The validation labels.
+        y_pred (array): The predicted labels.
+        palette: The Seaborn palette.
+        hue_order: The hue order for Seaborn.
+        ax (Axes): An Axes object. If None, one will be created.
+
+    Returns:
+        Axes.
+
     """
-    fig, ax = plt.subplots(figsize=(8,8))
+    if ax is None:
+        fig, ax = plt.subplots(figsize=(8,8))
+
+    if scaler is not None:
+        X_val = scaler.inverse_transform(X_val)
 
     # Plot the validation data
     scatter = sns.scatterplot(x=X_val[:,0], y=X_val[:,1], hue=y_val, s=200, ec='k', alpha=0.5, 
                               palette=palette, hue_order=hue_order, ax=ax)
 
     # Plot the predicted classes
-    ax = plt.gca()
     _ = sns.scatterplot(x=X_val[:,0], y=X_val[:,1], hue=y_pred, s=50, ec='k', alpha=0.75, 
                         palette=palette, hue_order=hue_order, 
                         ax=ax, legend=False)
-    return
+    return ax
 
 
 if __name__ == '__main__':
