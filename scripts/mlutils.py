@@ -605,7 +605,11 @@ def plot_ribbons(*arrs, s=None, legend=None, cmap=None, classes=None, titles=Non
     if legend and (classes is not None):
         raise ValueError('Class names will be drawn from the legend; do not pass both. Set classes=None.')
         
-    class_enc = np.unique(np.hstack([arr[s] for arr in arrs]))
+    if legend is not None:
+        class_enc = np.arange(len(legend))
+    else:
+        class_enc = np.unique(np.hstack([arr[s] for arr in arrs]))
+
     mi, ma = class_enc[[0, -1]]
     rng = ma - mi + 1
 

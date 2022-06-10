@@ -29,7 +29,6 @@ extras:
   - Intro_to_classification.ipynb
   - Intro_to_NumPy_for_ML.ipynb
   - Latent_semantic_analysis.ipynb
-  - Loading_messy_data.ipynb
   - Multiclass_classification.ipynb
   - Quick_intro_to_Dask.ipynb
   - Read_and_write_LAS.ipynb
