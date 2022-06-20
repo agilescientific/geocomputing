@@ -9,31 +9,29 @@ curriculum:
   1a:
     - Quick course overview
     - Introductions
-    - What is machine learning?
-    - Pandas_for_ML_data_management.ipynb
-    - Pandas_for_timeseries.ipynb
-  1b:
     - A quick introduction to supervised classification  # Conceptual only.
-    - Mis-steps_in_machine_learning.ipynb
+    - Multiclass_classification_1_Split_and_scale.ipynb
+  1b:
+    - Multiclass_classification_1_Split_and_scale.ipynb  # Continued
     - Check out and feedback
   2a:
     - Check in and review
-    - Intro_to_regression.ipynb
+    - Multiclass_classification_2_Fit_and_score.ipynb
   2b:
-    - Unsupervised_clustering_on_rock_properties.ipynb
-    - Making_maps_with_machine_learning.ipynb
+    - Multiclass_classification_3_Tune_and_save.ipynb
     - Check out and feedback
 extras:
   - Binary_classification.ipynb
   - Image_classification.ipynb
-  - Intro_to_classification.ipynb
-  - Intro_to_NumPy_for_ML.ipynb
   - Latent_semantic_analysis.ipynb
-  - Multiclass_classification.ipynb
+  - Making_maps_with_machine_learning.ipynb
+  - Pandas_for_timeseries.ipynb
+  - Decline_curve_analysis.ipynb
   - Quick_intro_to_Dask.ipynb
   - Read_and_write_LAS.ipynb
   - Read_SEG-Y_with_segyio.ipynb
   - Regression_with_Scikit-Learn.ipynb
+  - Unsupervised_clustering_on_rock_properties.ipynb
 scripts:
   - mlutils.py  # Copied to all notebook directories.
 references:
