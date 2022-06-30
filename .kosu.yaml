@@ -20,3 +20,5 @@ all:
   - geocomp
   - eda
   - model-zoo
+  - geo-ml
+  - peteng-ml

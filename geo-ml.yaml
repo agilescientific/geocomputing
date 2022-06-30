@@ -9,27 +9,22 @@ curriculum:
   1a:
     - Quick course overview
     - Introductions
-    - What is machine learning?
-    - Feature_engineering_with_pandas.ipynb
-  1b:
     - A quick introduction to supervised classification  # Conceptual only.
-    - Multiclass_classification_short.ipynb
+    - Multiclass_classification_1_Split_and_scale.ipynb
+  1b:
+    - Multiclass_classification_1_Split_and_scale.ipynb  # Continued
     - Check out and feedback
   2a:
     - Check in and review
-    - Multiclass_classification_short.ipynb
+    - Multiclass_classification_2_Fit_and_score.ipynb
   2b:
-    - Making_maps_with_machine_learning.ipynb
+    - Multiclass_classification_3_Tune_and_save.ipynb
     - Check out and feedback
 extras:
   - Binary_classification.ipynb
   - Image_classification.ipynb
-  - Intro_to_classification.ipynb
-  - Intro_to_NumPy_for_ML.ipynb
-  - Intro_to_regression.ipynb
   - Latent_semantic_analysis.ipynb
-  - Loading_messy_data.ipynb
-  - Mis-steps_in_machine_learning.ipynb
+  - Making_maps_with_machine_learning.ipynb
   - Pandas_for_timeseries.ipynb
   - Quick_intro_to_Dask.ipynb
   - Read_and_write_LAS.ipynb
