@@ -12,7 +12,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         include:
           - os: windows-latest
-            command: C:\Miniconda\condabin\conda env create -f environment-all.yml
+            command: chcp 65001 & C:\Miniconda\condabin\conda env create -f environment-all.yml
           - os: ubuntu-latest
             command: conda env create -f environment-all.yml
     runs-on: ${{ matrix.os }}
