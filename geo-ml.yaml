@@ -31,6 +31,7 @@ extras:
   - Read_SEG-Y_with_segyio.ipynb
   - Regression_with_Scikit-Learn.ipynb
   - Unsupervised_clustering_on_rock_properties.ipynb
+  - What_is_gradient_descent.ipynb
 scripts:
   - mlutils.py  # Copied to all notebook directories.
 references:
