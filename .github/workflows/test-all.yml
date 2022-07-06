@@ -29,7 +29,6 @@ jobs:
           pip install kosu
       - name: Test all courses build
         run: |
-          if (matrix.os == 'windows-latest'); then chcp 65001; fi
           kosu test --environment --all
       - name: Test conda environment
         run: |
