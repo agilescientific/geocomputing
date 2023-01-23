@@ -1,4 +1,5 @@
 title: Introduction to Geocomputing
+environment: geocomp
 conda:
   - pooch
 pip:
@@ -33,11 +34,16 @@ curriculum:
     - Check in and review
     - Data_visualization.ipynb
     - Check out and feedback
+  5:
+    - Check in and review
+    - Intro_to_Pandas.ipynb
+    - Decline_curve_analysis.ipynb
+    - Volumetrics_and_units.ipynb
+    - Check out and feedback
 extras:  # These will be listed in the Curriculum.
   - Advanced_functions.ipynb
   - Intro_to_NumPy.ipynb
   - Practice_NumPy.ipynb
-  - Intro_to_Pandas.ipynb
   - Seismic_data_basics.ipynb
   - Advanced_matplotlib.ipynb
   - Testing_basics.ipynb
@@ -48,12 +54,9 @@ extras:  # These will be listed in the Curriculum.
   - Read_SEG-Y_with_segyio.ipynb
   - Writing_data_to_files_or_databases.ipynb
 demos:  # These will NOT be listed in the Curriculum.
-  - Birthquake.ipynb
-  - Volumetrics_and_units.ipynb
   - Custom_colormaps_in_matplotlib.ipynb
   - Interactive_widgets_in_Jupyter.ipynb
   - Regular_expressions_for_text_processing.ipynb
-  - Pint_for_physical_units.ipynb
+  - Nonlinear_regression_with_Gardner_equation.ipynb
   - Get_info_from_web.ipynb
-  - Practice_loops.ipynb
   - Ternary_diagrams.ipynb

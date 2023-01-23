@@ -1,5 +1,5 @@
-# 2-half-days shallow learning intro class for engineers.
-title: Intro to Machine Learning for Petroleum Engineering
+# 2-half-days shallow learning intro class for geos.
+title: Intro to Machine Learning for Subsurface
 environment: geoml
 conda:
   - umap-learn
@@ -26,12 +26,12 @@ extras:
   - Latent_semantic_analysis.ipynb
   - Making_maps_with_machine_learning.ipynb
   - Pandas_for_timeseries.ipynb
-  - Decline_curve_analysis.ipynb
   - Quick_intro_to_Dask.ipynb
   - Read_and_write_LAS.ipynb
   - Read_SEG-Y_with_segyio.ipynb
   - Regression_with_Scikit-Learn.ipynb
   - Unsupervised_clustering_on_rock_properties.ipynb
+  - What_is_gradient_descent.ipynb
 scripts:
   - mlutils.py  # Copied to all notebook directories.
 references:
